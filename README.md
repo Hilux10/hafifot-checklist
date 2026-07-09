@@ -1,33 +1,9 @@
-{
-  "name": "צ'קליסט חפיפות - אגף ביטחון רכבת ישראל",
-  "short_name": "חפיפות רכבת",
-  "description": "מערכת מובייל בהירה למעקב אחר חפיפות מאבטחים ובודקים ביטחוניים",
-  "start_url": "./index.html",
-  "scope": "./",
-  "display": "standalone",
-  "orientation": "portrait",
-  "background_color": "#f4f7fb",
-  "theme_color": "#f4f7fb",
-  "lang": "he",
-  "dir": "rtl",
-  "icons": [
-    {
-      "src": "icons/icon-192.png",
-      "sizes": "192x192",
-      "type": "image/png",
-      "purpose": "any"
-    },
-    {
-      "src": "icons/icon-512.png",
-      "sizes": "512x512",
-      "type": "image/png",
-      "purpose": "any"
-    },
-    {
-      "src": "icons/icon-maskable-512.png",
-      "sizes": "512x512",
-      "type": "image/png",
-      "purpose": "maskable"
-    }
-  ]
-}
+# צ׳קליסט חפיפות - גרסת העלאה פשוטה
+
+בגרסה הזאת כל הקבצים נמצאים בתיקייה הראשית, בלי תיקיית icons.
+
+להעלאה ל-GitHub:
+1. למחוק את הקבצים הישנים מה-repository אם עלו לא נכון.
+2. להעלות את כל הקבצים מתוך תיקייה זו לשורש הפרויקט.
+3. להפעיל GitHub Pages על main / root.
+4. לפתוח: https://Hilux10.github.io/hafifot-checklist/?v=5
