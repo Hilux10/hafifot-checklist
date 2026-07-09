@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+<title>צ'קליסט חפיפות | אגף ביטחון רכבת ישראל</title>
+<meta name="description" content="מערכת מובייל לניהול חפיפות מאבטחים ובודקים ביטחוניים" />
+<meta name="theme-color" content="#f4f7fb" />
+<meta name="mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="default" />
+<meta name="apple-mobile-web-app-title" content="חפיפות" />
+<link rel="manifest" href="manifest.json" />
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png" />
+<link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32.png" />
+<link rel="icon" type="image/png" sizes="16x16" href="icons/favicon-16.png" />
+<style>
+
+:root{
+  --bg:#f4f7fb;
+  --bg-2:#eaf1f8;
+  --surface:#ffffff;
+  --surface-soft:#f8fbff;
+  --surface-blue:#eef6ff;
+  --surface-green:#eefdf6;
+  --line:#d7e2ef;
+  --line-strong:#c4d4e6;
+  --text:#172337;
+  --muted:#64748b;
+  --faint:#8a9aaf;
+  --blue:#1976d2;
+  --blue-2:#2f8bf0;
+  --navy:#11345f;
+  --red:#ef4444;
+  --amber:#f5a400;
+  --green:#18a86b;
+  --white:#fff;
+  --shadow:0 16px 45px rgba(18,42,74,.10);
+  --shadow-soft:0 8px 24px rgba(18,42,74,.07);
+  --safe-t:env(safe-area-inset-top,0px);
+  --safe-b:env(safe-area-inset-bottom,0px);
+  --font:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Rubik","Arial",sans-serif;
+  --mono:"SFMono-Regular","Consolas","Courier New",monospace;
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{height:100%}
+body{
+  margin:0;
+  font-family:var(--font);
+  background:
+    radial-gradient(900px 650px at 85% -12%, rgba(47,139,240,.16), transparent 58%),
+    radial-gradient(760px 520px at -20% 8%, rgba(24,168,107,.10), transparent 60%),
+    linear-gradient(180deg,#f8fbff 0%,var(--bg) 42%,#eef4fa 100%);
+  color:var(--text);
+  min-height:100vh;
+  overflow-x:hidden;
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
+}
+button,input{font:inherit}
+button{touch-action:manipulation}
+.mono{font-family:var(--mono);font-variant-numeric:tabular-nums}
+.screen{display:none;min-height:100vh;width:100%;position:relative}
+.screen.active{display:block}
+.app-shell{max-width:520px;margin:0 auto;min-height:100vh;position:relative;padding-inline:16px}
+
+/* HOME */
+#homeScreen .app-shell{padding-top:calc(var(--safe-t) + 18px);padding-bottom:calc(var(--safe-b) + 28px);display:flex;flex-direction:column}
+.home-top{display:flex;align-items:center;gap:13px;margin-bottom:18px}
+.logo-card{
+  width:56px;height:56px;border-radius:18px;flex:0 0 auto;display:grid;place-items:center;
+  background:var(--navy);
+  border:1px solid rgba(17,52,95,.16);
+  box-shadow:var(--shadow-soft), inset 0 1px 0 rgba(255,255,255,.12);
+  overflow:hidden;
+}
+.logo-card img{width:56px;height:56px;object-fit:cover}
+.brand-copy{min-width:0;flex:1}
+.brand-copy .overline{font-size:10px;color:var(--blue);letter-spacing:1.25px;font-weight:900;text-transform:uppercase;margin-bottom:4px}
+.brand-copy h1{margin:0;font-size:18px;line-height:1.2;font-weight:900;color:var(--text)}
+.pill-install{
+  display:none;align-items:center;gap:7px;border:1px solid rgba(25,118,210,.25);border-radius:999px;background:#fff;
+  color:var(--blue);padding:9px 12px;font-weight:900;font-size:12px;cursor:pointer;white-space:nowrap;box-shadow:var(--shadow-soft);
+}
+.pill-install.show{display:flex}
+.pill-install svg{width:15px;height:15px}
+.hero-card{
+  position:relative;overflow:hidden;border-radius:30px;margin:8px 0 18px;padding:22px 20px 20px;
+  background:linear-gradient(145deg,#ffffff,#f3f8ff);
+  border:1px solid var(--line);box-shadow:var(--shadow);
+}
+.hero-card:before{content:"";position:absolute;inset:-80px -70px auto auto;width:220px;height:220px;border-radius:50%;background:rgba(47,139,240,.11);filter:blur(4px)}
+.hero-card:after{content:"";position:absolute;inset:auto auto -90px -78px;width:190px;height:190px;border-radius:50%;background:rgba(24,168,107,.10);filter:blur(8px)}
+.hero-card>*{position:relative;z-index:1}
+.hero-card .chip{display:inline-flex;align-items:center;gap:7px;border:1px solid rgba(24,168,107,.20);background:#f1fff8;border-radius:999px;padding:7px 11px;color:#0c7b4d;font-size:11px;font-weight:900;margin-bottom:12px}
+.hero-card .chip .live-dot{width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 10px rgba(24,168,107,.45)}
+.hero-card h2{margin:0 0 8px;font-size:28px;letter-spacing:-.5px;line-height:1.18;font-weight:1000;color:var(--text)}
+.hero-card p{margin:0;color:var(--muted);font-size:14px;line-height:1.65}
+.role-grid{display:grid;gap:14px;margin-top:2px}
+.role-card{
+  position:relative;overflow:hidden;display:grid;grid-template-columns:76px 1fr auto;align-items:center;gap:14px;
+  min-height:128px;padding:16px;border-radius:28px;border:1px solid var(--line);cursor:pointer;
+  background:linear-gradient(155deg,#ffffff,#f7fbff);box-shadow:var(--shadow-soft);
+  color:var(--text);text-align:right;
+  transition:transform .16s ease,border-color .16s ease,box-shadow .16s ease;
+}
+.role-card:active{transform:scale(.982)}
+.role-card.complete{border-color:rgba(24,168,107,.35);box-shadow:0 14px 34px rgba(24,168,107,.10),var(--shadow-soft)}
+.role-icon{
+  position:relative;width:76px;height:76px;border-radius:24px;display:grid;place-items:center;
+  background:linear-gradient(160deg,#eef6ff,#ffffff);border:1px solid var(--line);
+}
+.role-icon svg{width:32px;height:32px;stroke:var(--blue)}
+.role-text h3{margin:0 0 5px;font-size:20px;font-weight:950;color:var(--text)}
+.role-text .desc{color:var(--muted);font-size:13px;line-height:1.35;margin-bottom:12px}
+.role-progress{display:flex;align-items:center;gap:8px}
+.tiny-track{height:7px;border-radius:99px;background:#e7eef7;overflow:hidden;flex:1}
+.tiny-track i{display:block;height:100%;border-radius:inherit;transition:width .45s ease,background .45s ease}
+.tiny-count{font-family:var(--mono);font-size:11px;color:var(--muted);font-weight:900;min-width:48px;text-align:left}
+.role-ring{position:relative;width:58px;height:58px}
+.role-ring svg{width:58px;height:58px;transform:rotate(-90deg)}
+.role-ring circle{fill:none;stroke-width:7}
+.role-ring .bg{stroke:#e7eef7}
+.role-ring .fg{stroke-linecap:round;transition:stroke-dashoffset .45s ease,stroke .45s ease}
+.role-ring b{position:absolute;inset:0;display:grid;place-items:center;font-family:var(--mono);font-size:13px;color:var(--text)}
+.home-footer{margin-top:auto;padding-top:18px;text-align:center;color:var(--faint);font-family:var(--mono);font-size:10.5px;letter-spacing:.5px}
+
+/* LIST */
+#listScreen .app-shell{padding-top:calc(var(--safe-t) + 12px);padding-bottom:calc(var(--safe-b) + 34px)}
+.topbar{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+.icon-button{
+  width:44px;height:44px;border:1px solid var(--line);border-radius:16px;background:#fff;color:var(--navy);
+  display:grid;place-items:center;cursor:pointer;box-shadow:var(--shadow-soft)
+}
+.icon-button:active{transform:scale(.96);background:#f3f8ff}
+.icon-button svg{width:20px;height:20px;stroke:currentColor}
+.title-stack{min-width:0;flex:1}
+.title-stack .kicker{font-size:10px;letter-spacing:1.1px;text-transform:uppercase;color:var(--blue);font-weight:900;margin-bottom:3px}
+.title-stack h1{margin:0;font-size:18px;font-weight:950;line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:var(--text)}
+.progress-panel{
+  border:1px solid var(--line);border-radius:28px;background:linear-gradient(145deg,#ffffff,#f2f8ff);
+  box-shadow:var(--shadow);padding:17px;margin-bottom:14px;position:relative;overflow:hidden;
+}
+.progress-panel:before{content:"";position:absolute;top:-90px;left:-40px;width:180px;height:180px;border-radius:50%;background:rgba(47,139,240,.10);filter:blur(4px)}
+.progress-panel>*{position:relative;z-index:1}
+.progress-main{display:grid;grid-template-columns:96px 1fr;gap:16px;align-items:center}
+.gauge{position:relative;width:96px;height:96px}
+.gauge svg{width:96px;height:96px;transform:rotate(-90deg)}
+.gauge circle{fill:none;stroke-width:9}
+.gauge .bg{stroke:#e2eaf4}
+.gauge .fg{stroke-linecap:round;transition:stroke-dashoffset .45s cubic-bezier(.2,.9,.2,1),stroke .45s ease;filter:drop-shadow(0 0 5px rgba(0,0,0,.08))}
+.gauge .center{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.gauge .pct{font-size:22px;font-weight:1000;font-family:var(--mono);line-height:1}
+.gauge .label{font-size:10px;color:var(--muted);font-weight:800;margin-top:4px}
+.progress-info .status-row{display:flex;justify-content:space-between;gap:12px;color:var(--muted);font-size:12px;line-height:1.5;margin-bottom:6px}
+.progress-info .status-row b{font-family:var(--mono);color:var(--text);font-size:13px;white-space:nowrap}
+.big-track{height:12px;border-radius:99px;background:#e5edf6;overflow:hidden;border:1px solid #dce6f0;margin:10px 0 12px}
+.big-track i{display:block;height:100%;width:0;border-radius:inherit;transition:width .45s ease,background .45s ease,box-shadow .45s ease}
+.progress-actions{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:12px}
+.action-btn{border:1px solid var(--line);border-radius:16px;padding:12px 12px;background:#fff;color:var(--navy);font-weight:900;display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;box-shadow:0 8px 20px rgba(18,42,74,.05)}
+.action-btn svg{width:17px;height:17px}
+.action-btn.danger{color:#b4232d;border-color:#ffd2d6;background:#fff6f7}
+.action-btn:active{transform:scale(.98);background:#f4f8fd}
+.filter-box{display:grid;grid-template-columns:1fr;gap:10px;margin-bottom:14px}
+.search-wrap{position:relative}
+.search-wrap svg{position:absolute;right:14px;top:50%;transform:translateY(-50%);width:18px;height:18px;stroke:var(--faint)}
+.search-wrap input{width:100%;height:50px;border-radius:18px;border:1px solid var(--line);background:#fff;color:var(--text);padding:0 44px 0 14px;outline:none;font-size:16px;box-shadow:0 8px 20px rgba(18,42,74,.04)}
+.search-wrap input::placeholder{color:var(--faint)}
+.search-wrap input:focus{border-color:rgba(25,118,210,.45);box-shadow:0 0 0 4px rgba(25,118,210,.10)}
+.segment{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;background:#edf4fb;border:1px solid var(--line);border-radius:18px;padding:5px}
+.segment button{height:40px;border:0;border-radius:13px;background:transparent;color:var(--muted);font-weight:900;cursor:pointer;font-size:13px}
+.segment button.active{background:#ffffff;color:var(--blue);box-shadow:0 6px 18px rgba(18,42,74,.08), inset 0 0 0 1px rgba(25,118,210,.14)}
+.section{margin:16px 0 18px}
+.section-head{display:flex;align-items:center;gap:10px;margin:0 3px 10px;color:var(--muted)}
+.section-head .section-icon{width:34px;height:34px;border-radius:13px;border:1px solid var(--line);background:#fff;display:grid;place-items:center;color:var(--blue);box-shadow:0 6px 16px rgba(18,42,74,.05)}
+.section-head .section-icon svg{width:18px;height:18px}
+.section-head .section-copy{flex:1;min-width:0}
+.section-head h2{margin:0;font-size:13px;color:var(--text);font-weight:950}
+.section-head span{font-family:var(--mono);font-size:11px;color:var(--faint)}
+.check-item{
+  display:grid;grid-template-columns:34px 1fr 28px;gap:11px;align-items:center;min-height:64px;margin-bottom:9px;padding:13px 13px 13px 10px;
+  border-radius:22px;border:1px solid var(--line);background:#fff;cursor:pointer;color:var(--text);
+  box-shadow:0 7px 18px rgba(18,42,74,.055);
+  transition:border-color .16s ease,background .16s ease,transform .10s ease,box-shadow .16s ease;
+}
+.check-item:active{transform:scale(.988)}
+.check-item.checked{border-color:rgba(24,168,107,.35);background:linear-gradient(180deg,#f0fff7,#ffffff);box-shadow:0 10px 24px rgba(24,168,107,.10)}
+.item-mark{width:34px;height:34px;border-radius:14px;border:2px solid #cdd9e7;display:grid;place-items:center;background:#f7fbff;transition:all .16s ease}
+.item-mark svg{width:18px;height:18px;opacity:0;transform:scale(.55);transition:all .16s ease;stroke:#ffffff}
+.check-item.checked .item-mark{background:var(--green);border-color:var(--green);box-shadow:0 0 14px rgba(24,168,107,.28)}
+.check-item.checked .item-mark svg{opacity:1;transform:scale(1)}
+.item-copy{min-width:0}
+.item-copy .item-title{font-size:14.7px;line-height:1.48;font-weight:780;color:var(--text)}
+.check-item.checked .item-copy .item-title{color:#126b48}
+.item-copy .item-meta{margin-top:5px;font-family:var(--mono);font-size:10.5px;color:var(--faint);display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.check-item.checked .item-copy .item-meta{color:#219263}
+.item-mini-icon{width:28px;height:28px;border-radius:12px;background:#f2f8ff;border:1px solid #d8e6f5;display:grid;place-items:center;color:var(--blue)}
+.item-mini-icon svg{width:15px;height:15px}
+.empty-state{display:none;text-align:center;color:var(--muted);border:1px dashed var(--line-strong);border-radius:24px;padding:28px 18px;margin-top:16px;background:rgba(255,255,255,.66)}
+.empty-state svg{width:38px;height:38px;stroke:var(--blue);margin-bottom:10px}
+.empty-state b{display:block;color:var(--text);font-size:15px;margin-bottom:4px}
+
+/* MODALS */
+.overlay{position:fixed;inset:0;z-index:50;display:none;align-items:center;justify-content:center;padding:22px;background:rgba(23,35,55,.35);backdrop-filter:blur(10px)}
+.overlay.active{display:flex}
+.modal{width:100%;max-width:380px;border:1px solid var(--line);border-radius:30px;background:#fff;box-shadow:0 28px 80px rgba(18,42,74,.22);padding:25px 21px 20px;text-align:center;animation:pop .23s cubic-bezier(.2,1,.25,1);color:var(--text)}
+@keyframes pop{from{transform:translateY(16px) scale(.94);opacity:0}to{transform:translateY(0) scale(1);opacity:1}}
+.modal-badge{width:66px;height:66px;border-radius:24px;margin:0 auto 15px;display:grid;place-items:center;border:1px solid var(--line);background:#f6f9fd}
+.modal-badge svg{width:30px;height:30px}
+.modal-badge.ok{background:#eefdf6;border-color:rgba(24,168,107,.30);box-shadow:0 0 26px rgba(24,168,107,.12)}
+.modal-badge.ok svg{stroke:var(--green)}
+.modal-badge.warn{background:#fff8e7;border-color:rgba(245,164,0,.30)}
+.modal-badge.warn svg{stroke:var(--amber)}
+.modal h3{margin:0 0 8px;font-size:20px;font-weight:1000;color:var(--text)}
+.modal p{margin:0 0 21px;color:var(--muted);font-size:14px;line-height:1.6}
+.modal-actions{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+.modal-actions.single{grid-template-columns:1fr}
+.modal-btn{border:0;border-radius:17px;padding:14px 12px;font-weight:950;cursor:pointer;color:var(--text);background:#f2f6fb;border:1px solid var(--line)}
+.modal-btn.primary{color:#fff;background:linear-gradient(135deg,#2f8bf0,#1976d2);border-color:transparent}
+.modal-btn.danger{background:linear-gradient(135deg,#ff737b,var(--red));border-color:transparent;color:white}
+.install-sheet{position:fixed;left:14px;right:14px;bottom:calc(var(--safe-b) + 14px);z-index:45;display:none;align-items:flex-start;gap:12px;padding:15px;border-radius:23px;background:#fff;border:1px solid var(--line);box-shadow:0 20px 55px rgba(18,42,74,.16);color:var(--text)}
+.install-sheet.show{display:flex}
+.install-sheet img{width:40px;height:40px;border-radius:12px;flex:0 0 auto}
+.install-sheet div{flex:1;min-width:0}
+.install-sheet b{display:block;font-size:14px;margin-bottom:3px;color:var(--text)}
+.install-sheet span{color:var(--muted);font-size:12px;line-height:1.5}
+.install-sheet button{border:0;background:#f0f5fb;color:var(--muted);width:28px;height:28px;border-radius:10px;cursor:pointer}
+@media (max-width:360px){
+  .app-shell{padding-inline:12px}
+  .role-card{grid-template-columns:64px 1fr}.role-ring{display:none}.role-icon{width:64px;height:64px}.hero-card h2{font-size:24px}.progress-main{grid-template-columns:82px 1fr}.gauge,.gauge svg{width:82px;height:82px}.gauge .pct{font-size:19px}.action-btn{font-size:13px;padding-inline:8px}.check-item{grid-template-columns:32px 1fr 24px;gap:9px}
+}
+@media (min-width:760px){
+  body{background-color:var(--bg)}.app-shell{max-width:620px}.role-grid{grid-template-columns:1fr 1fr}.role-card{grid-template-columns:76px 1fr;min-height:168px;align-items:start}.role-ring{grid-column:1/-1;justify-self:end;margin-top:-54px}.check-item{grid-template-columns:36px 1fr 30px}.filter-box{grid-template-columns:1fr 250px}
+}
+
+</style>
+</head>
+<body>
+<div id="app">
+  <main class="screen active" id="homeScreen">
+    <div class="app-shell">
+      <header class="home-top">
+        <div class="logo-card"><img src="icons/icon-192.png" alt="לוגו" /></div>
+        <div class="brand-copy">
+          <div class="overline">אגף ביטחון · רכבת ישראל</div>
+          <h1>מערכת חפיפות דיגיטלית</h1>
+        </div>
+        <button class="pill-install" id="installBtn" type="button" aria-label="התקנת האפליקציה">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg>
+          התקנה
+        </button>
+      </header>
+      <section class="hero-card">
+        <div class="chip"><span class="live-dot"></span>מערכת מוכנה לעבודה</div>
+        <h2>בחר סוג חפיפה</h2>
+        <p>מסך מובייל מלא עם צ'קליסט מסודר, מעקב אחוזים לפי סעיפים, שמירה אוטומטית ואיפוס מאובטח עם אישור.</p>
+      </section>
+      <section class="role-grid" id="roleGrid" aria-label="בחירת סוג חפיפה"></section>
+      <footer class="home-footer">HANDOVER CHECKLIST // MOBILE PWA // LIGHT v4</footer>
+    </div>
+  </main>
+
+  <main class="screen" id="listScreen">
+    <div class="app-shell">
+      <header class="topbar">
+        <button class="icon-button" id="backBtn" type="button" aria-label="חזרה למסך ראשי">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18 9 12l6-6"/></svg>
+        </button>
+        <div class="title-stack">
+          <div class="kicker" id="roleKicker">חפיפה</div>
+          <h1 id="roleTitle">-</h1>
+        </div>
+      </header>
+
+      <section class="progress-panel" id="progressPanel">
+        <div class="progress-main">
+          <div class="gauge">
+            <svg viewBox="0 0 96 96" aria-hidden="true">
+              <circle class="bg" cx="48" cy="48" r="41"></circle>
+              <circle class="fg" id="gaugeFg" cx="48" cy="48" r="41" stroke-dasharray="257.61" stroke-dashoffset="257.61"></circle>
+            </svg>
+            <div class="center"><div class="pct mono" id="pctText">0%</div><div class="label">הושלם</div></div>
+          </div>
+          <div class="progress-info">
+            <div class="status-row"><span>סעיפים שסומנו</span><b id="countText">0/0</b></div>
+            <div class="status-row"><span>סטטוס חפיפה</span><b id="statusText">בהמתנה</b></div>
+            <div class="big-track"><i id="progressBar"></i></div>
+            <div class="status-row"><span>צבע התקדמות</span><b id="colorText">אדום ← צהוב ← ירוק</b></div>
+          </div>
+        </div>
+        <div class="progress-actions">
+          <button class="action-btn danger" id="resetBtn" type="button">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><path d="m19 6-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6M14 11v6"/></svg>
+            איפוס סעיפים
+          </button>
+          <button class="action-btn" id="topBtn" type="button">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5"/><path d="m5 12 7-7 7 7"/></svg>
+            חזרה למעלה
+          </button>
+        </div>
+      </section>
+
+      <section class="filter-box" aria-label="סינון חפיפה">
+        <div class="search-wrap">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+          <input id="searchInput" type="search" autocomplete="off" placeholder="חיפוש סעיף בחפיפה..." />
+        </div>
+        <div class="segment" role="tablist" aria-label="סינון סטטוס">
+          <button class="active" type="button" data-filter="all">הכל</button>
+          <button type="button" data-filter="open">פתוחים</button>
+          <button type="button" data-filter="done">בוצעו</button>
+        </div>
+      </section>
+
+      <section id="checklist"></section>
+      <div class="empty-state" id="emptyState">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+        <b>אין סעיפים להצגה</b>
+        <span>נסה לשנות חיפוש או סינון.</span>
+      </div>
+    </div>
+  </main>
+</div>
+
+<div class="overlay" id="resetOverlay" role="dialog" aria-modal="true" aria-label="אישור איפוס">
+  <div class="modal">
+    <div class="modal-badge warn"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 9v4"/><path d="M12 17h.01"/><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0Z"/></svg></div>
+    <h3>לאפס את כל הסעיפים?</h3>
+    <p>ההתקדמות של החפיפה הנוכחית תימחק. הפעולה לא מוחקת את סוג החפיפה השני.</p>
+    <div class="modal-actions">
+      <button class="modal-btn" id="cancelReset" type="button">ביטול</button>
+      <button class="modal-btn danger" id="confirmReset" type="button">כן, אפס</button>
+    </div>
+  </div>
+</div>
+
+<div class="overlay" id="successOverlay" role="dialog" aria-modal="true" aria-label="החפיפה הושלמה">
+  <div class="modal">
+    <div class="modal-badge ok"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></div>
+    <h3>כל הכבוד! 🎉</h3>
+    <p>עברת על כל חומר הנדרש. החפיפה הושלמה במלואה והמערכת עומדת על 100%.</p>
+    <div class="modal-actions single"><button class="modal-btn primary" id="closeSuccess" type="button">הבנתי, תודה</button></div>
+  </div>
+</div>
+
+<div class="install-sheet" id="iosSheet">
+  <img src="icons/icon-192.png" alt="" />
+  <div><b>התקנה באייפון</b><span>לחץ על שיתוף ואז “הוסף למסך הבית” כדי לפתוח את זה כמו אפליקציה.</span></div>
+  <button id="closeIosSheet" type="button">×</button>
+</div>
+
+<script>
+(function(){
+  var ICONS = {
+    shield:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 19 6v6c0 4.5-3 8-7 9-4-1-7-4.5-7-9V6l7-3Z"/></svg>',
+    search:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>',
+    station:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10h16"/><path d="M6 10V6a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v4"/><path d="M6 10v8M18 10v8"/><path d="M4 20h16"/></svg>',
+    cabinet:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M9 7h6"/><path d="M9 12h.01"/><path d="M15 12h.01"/></svg>',
+    book:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M4 4.5A2.5 2.5 0 0 1 6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5Z"/></svg>',
+    radio:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="8" width="10" height="13" rx="2"/><path d="M10 8V3h4v5"/><path d="M10 12h4"/><path d="M11 17h2"/></svg>',
+    report:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z"/><path d="M14 2v6h6"/><path d="M8 13h8"/><path d="M8 17h6"/></svg>',
+    alarm:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0Z"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg>',
+    train:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3" width="16" height="14" rx="4"/><path d="M4 11h16"/><circle cx="8" cy="17.5" r="1.6"/><circle cx="16" cy="17.5" r="1.6"/><path d="m8 22 2-3"/><path d="m16 22-2-3"/></svg>',
+    people:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>',
+    envelope:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>'
+  };
+  function item(text){ return { text:text }; }
+  var BASE_SECTIONS = [
+    { id:'opening', title:'פתיחת משמרת ותחנה', icon:'station', items:[
+      item('אופן פתיחת משמרת ודיווח הגעה'),
+      item('נוהל פתיחת תחנה'),
+      item('נוהל סגירת תחנה'),
+      item('חוברת תדריך - אופן קבלת תדריך והעברת תדריך')
+    ]},
+    { id:'station', title:'הכרת תחנה וציוד', icon:'cabinet', items:[
+      item('ארון ביטחון'),
+      item('ארון ציוד חירום'),
+      item('משרד מנהל תחנה - עזרה ראשונה'),
+      item('מפסק זרם ראשי'),
+      item('פטריית כפתור וולידטורים'),
+      item('כריזה'),
+      item('מרחבים מוגנים'),
+      item('חשיבות הכרות כיווני שמיים'),
+      item('יציאות חירום'),
+      item('אופן שימוש במעלון נכים כולל איסור שימוש ללא אישור רמ״ש, וכן כל אינטראקציה עם נכים'),
+      item('אופן בדיקת ציוד תחנה טרם פתיחת תחנה')
+    ]},
+    { id:'procedures', title:'נהלים, סמכויות וחומר מקצועי', icon:'book', items:[
+      item('אופן קריאת פק״מ אבטחה'),
+      item('טבלת בידוק עדכנית'),
+      item('פנקס סמכויות'),
+      item('חוברת תעודות'),
+      item('הכרות עם מכשיר קשר'),
+      item('בדיקת פועלים מקור חוץ'),
+      item('הכרות עם אמל״חים שונים'),
+      item('לומדת חשמול'),
+      item('דגשים בנושא עיכוב אדם')
+    ]},
+    { id:'screening', title:'בידוק, דיווחים ועבודה בשגרה', icon:'search', items:[
+      item('אופן ביצוע תשאול לאדם'),
+      item('אופן העברת דיווח לרמ״ש'),
+      item('אופן מתן הנחיות לנוסע לאחר קבלת הנחיה מרמ״ש'),
+      item('אופן אסיפת אמל״ח והמשך טיפולו'),
+      item('מילוי דוחות אירוע ועיכוב'),
+      item('הכרות ועבודה עם שער מגנומטר ומגנומטר ידני'),
+      item('עבודת איש ביטחון ברציפים במהלך שגרה'),
+      item('עבודת איש ביטחון בעמדת בידוק'),
+      item('תדרוך משקף לנחפף'),
+      item('סריקות בשגרה'),
+      item('בידוק ידני'),
+      item('נהלי עבודה בשגרה - תקלות נפוצות'),
+      item('עבודה בשעות עומס בכניסה לתחנה')
+    ]},
+    { id:'emergency', title:'אירועי חירום ותרגולים', icon:'alarm', items:[
+      item('העברת דיווחים במהלך אירועי חירום - נוהל 1'),
+      item('דגשים בנושא אירוע אדם על המסילה - חדירה מרציף ועצירת תנועת רכבות'),
+      item('נוהל חפץ חשוד - תרגול בדיבור'),
+      item('נוהל כבודה ללא בעלים - תרגול בפועל'),
+      item('נהלי חירום')
+    ]}
+  ];
+  var GUARD_EXTRA = { id:'guardExtra', title:'תוספות ייעודיות למאבטחים', icon:'train', items:[
+    item('ביצוע פתיחת ציר בפועל'),
+    item('הכרות עם סוגרי רכבות'),
+    item('נוהל עבודת מאבטח ברכבת במהלך משמרת בשגרה'),
+    item('ביצוע סריקות על מערך פ.צ'),
+    item('ביצוע סריקות על מערך במהלך שגרה'),
+    item('נוהל שת״פ עם פקח רכבת'),
+    item('פתיחת רכבת בחירום מבחוץ ומבפנים'),
+    item('עבודת איש ביטחון במעגל החיצוני ומטרתה')
+  ]};
+  var CLOSING = { id:'closing', title:'סיום חפיפה ואישורים', icon:'envelope', items:[
+    item('קבלת חומרי חפיפה במעטפה'),
+    item('ביצוע מבחן נהלים'),
+    item('החתמה על חוברת נהלים')
+  ]};
+
+  function cloneSections(sections){ return sections.map(function(sec){ return { id:sec.id, title:sec.title, icon:sec.icon, items:sec.items.map(function(x){return {text:x.text};})}; }); }
+  var ROLES = {
+    guard:{ key:'guard', title:'חפיפת מאבטחים', shortTitle:'מאבטחים', kicker:'מסלול מאבטח רכבת', storage:'handover_guard_v3', icon:'shield', sections:cloneSections(BASE_SECTIONS).concat([GUARD_EXTRA, CLOSING]) },
+    inspector:{ key:'inspector', title:'חפיפת בודקים ביטחוניים', shortTitle:'בודקים ביטחוניים', kicker:'מסלול בודק ביטחוני', storage:'handover_inspector_v3', icon:'search', sections:cloneSections(BASE_SECTIONS).concat([CLOSING]) }
+  };
+  var roleOrder = ['guard','inspector'];
+  function flatten(role){
+    var out=[]; var n=1;
+    role.sections.forEach(function(sec){
+      sec.items.forEach(function(it, idx){ out.push({ id:sec.id+'_'+idx, text:it.text, sectionId:sec.id, sectionTitle:sec.title, sectionIcon:sec.icon, num:n++ }); });
+    });
+    return out;
+  }
+  function getItems(role){ if(!role._items) role._items = flatten(role); return role._items; }
+  function storageOK(){ try{ var k='__rail_test__'; localStorage.setItem(k,'1'); localStorage.removeItem(k); return true; }catch(e){ return false; } }
+  var CAN_STORE = storageOK();
+  var mem = {};
+  function load(role){
+    if(CAN_STORE){ try{ return JSON.parse(localStorage.getItem(role.storage)||'{}') || {}; }catch(e){ return {}; } }
+    return mem[role.storage] || {};
+  }
+  function save(role, data){ mem[role.storage] = data; if(CAN_STORE){ try{ localStorage.setItem(role.storage, JSON.stringify(data)); }catch(e){} } }
+  function stats(role, checked){
+    var items=getItems(role); var done=0;
+    items.forEach(function(it){ if(checked[it.id]) done++; });
+    var pct=items.length ? Math.round(done/items.length*100) : 0;
+    return { total:items.length, done:done, pct:pct };
+  }
+  function hexToRgb(hex){ hex=hex.replace('#',''); return {r:parseInt(hex.slice(0,2),16),g:parseInt(hex.slice(2,4),16),b:parseInt(hex.slice(4,6),16)}; }
+  function lerp(a,b,t){ return a+(b-a)*t; }
+  function rgb(o){ return 'rgb('+Math.round(o.r)+','+Math.round(o.g)+','+Math.round(o.b)+')'; }
+  var RED=hexToRgb('#ff4e5a'), AMBER=hexToRgb('#ffbf38'), GREEN=hexToRgb('#26df8a');
+  function colorFor(p){
+    var t=Math.max(0,Math.min(100,p))/100;
+    if(t<=.55){ var x=t/.55; return rgb({r:lerp(RED.r,AMBER.r,x),g:lerp(RED.g,AMBER.g,x),b:lerp(RED.b,AMBER.b,x)}); }
+    var y=(t-.55)/.45; return rgb({r:lerp(AMBER.r,GREEN.r,y),g:lerp(AMBER.g,GREEN.g,y),b:lerp(AMBER.b,GREEN.b,y)});
+  }
+  function statusFor(p){ if(p===0) return 'טרם התחיל'; if(p<35) return 'בתחילת חפיפה'; if(p<75) return 'מתקדם'; if(p<100) return 'לקראת סיום'; return 'הושלם ✓'; }
+  function esc(s){ return String(s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];}); }
+
+  var state={ role:null, checked:{}, filter:'all', search:'' };
+  var $=function(id){ return document.getElementById(id); };
+  var home=$('homeScreen'), list=$('listScreen'), roleGrid=$('roleGrid'), checklist=$('checklist'), empty=$('emptyState');
+  var gaugeFg=$('gaugeFg'), pctText=$('pctText'), countText=$('countText'), statusText=$('statusText'), colorText=$('colorText'), progressBar=$('progressBar');
+  var CIRC=2*Math.PI*41, RING=2*Math.PI*25;
+
+  function renderHome(){
+    roleGrid.innerHTML='';
+    roleOrder.forEach(function(key){
+      var role=ROLES[key], checked=load(role), s=stats(role,checked), color=colorFor(s.pct), offset=RING*(1-s.pct/100);
+      var card=document.createElement('button');
+      card.type='button';
+      card.className='role-card'+(s.pct===100?' complete':'');
+      card.innerHTML='<div class="role-icon">'+ICONS[role.icon]+'</div>'+
+        '<div class="role-text"><h3>'+esc(role.shortTitle)+'</h3><div class="desc">'+esc(role.kicker)+' · '+s.total+' סעיפים</div><div class="role-progress"><div class="tiny-track"><i style="width:'+s.pct+'%;background:'+color+'"></i></div><div class="tiny-count">'+s.done+'/'+s.total+'</div></div></div>'+
+        '<div class="role-ring"><svg viewBox="0 0 58 58"><circle class="bg" cx="29" cy="29" r="25"></circle><circle class="fg" cx="29" cy="29" r="25" stroke="'+color+'" stroke-dasharray="'+RING+'" stroke-dashoffset="'+offset+'"></circle></svg><b>'+s.pct+'%</b></div>';
+      card.addEventListener('click',function(){ openRole(role); });
+      roleGrid.appendChild(card);
+    });
+  }
+  function openRole(role){
+    state.role=role; state.checked=load(role); state.filter='all'; state.search='';
+    $('searchInput').value='';
+    document.querySelectorAll('.segment button').forEach(function(b){ b.classList.toggle('active', b.dataset.filter==='all'); });
+    $('roleKicker').textContent=role.kicker; $('roleTitle').textContent=role.title;
+    home.classList.remove('active'); list.classList.add('active'); window.scrollTo({top:0,behavior:'auto'});
+    updateProgress(); renderChecklist();
+  }
+  function updateProgress(){
+    var s=stats(state.role,state.checked), color=colorFor(s.pct), offset=CIRC*(1-s.pct/100);
+    gaugeFg.setAttribute('stroke-dasharray',CIRC.toFixed(2)); gaugeFg.setAttribute('stroke-dashoffset',offset.toFixed(2)); gaugeFg.setAttribute('stroke',color);
+    pctText.textContent=s.pct+'%'; pctText.style.color=color;
+    countText.textContent=s.done+'/'+s.total; statusText.textContent=statusFor(s.pct); statusText.style.color=(s.pct===100?'var(--green)':'var(--text)');
+    progressBar.style.width=s.pct+'%'; progressBar.style.background=color; progressBar.style.boxShadow='0 0 18px '+color;
+    colorText.textContent=s.pct===100 ? 'ירוק מלא' : (s.pct>=40 ? 'מתקדם לצהוב/ירוק' : 'אדום - תחילת תהליך');
+    return s;
+  }
+  function renderChecklist(){
+    var role=state.role, visible=0, query=state.search.trim().toLowerCase(); checklist.innerHTML='';
+    role.sections.forEach(function(sec){
+      var items=sec.items.map(function(it,idx){return { id:sec.id+'_'+idx, text:it.text, num:getItems(role).find(function(x){return x.id===sec.id+'_'+idx;}).num };}).filter(function(it){
+        var done=!!state.checked[it.id];
+        if(state.filter==='open' && done) return false;
+        if(state.filter==='done' && !done) return false;
+        if(query && it.text.toLowerCase().indexOf(query)===-1 && sec.title.toLowerCase().indexOf(query)===-1) return false;
+        return true;
+      });
+      if(!items.length) return;
+      visible += items.length;
+      var doneInSection=sec.items.filter(function(it,idx){ return !!state.checked[sec.id+'_'+idx]; }).length;
+      var section=document.createElement('section'); section.className='section';
+      var html='<div class="section-head"><div class="section-icon">'+ICONS[sec.icon]+'</div><div class="section-copy"><h2>'+esc(sec.title)+'</h2><span>'+doneInSection+'/'+sec.items.length+' בוצעו</span></div></div>';
+      items.forEach(function(it){
+        var checked=!!state.checked[it.id];
+        html+='<div class="check-item '+(checked?'checked':'')+'" data-id="'+esc(it.id)+'" role="checkbox" aria-checked="'+checked+'" tabindex="0">'+
+          '<div class="item-mark"><svg viewBox="0 0 24 24" fill="none" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></div>'+
+          '<div class="item-copy"><div class="item-title">'+esc(it.text)+'</div><div class="item-meta"><span>#'+String(it.num).padStart(2,'0')+'</span><span>'+esc(sec.title)+'</span></div></div>'+
+          '<div class="item-mini-icon">'+ICONS[sec.icon]+'</div></div>';
+      });
+      section.innerHTML=html; checklist.appendChild(section);
+    });
+    empty.style.display=visible?'none':'block';
+    checklist.querySelectorAll('.check-item').forEach(function(row){
+      row.addEventListener('click',function(){ toggle(row.dataset.id); });
+      row.addEventListener('keydown',function(e){ if(e.key==='Enter' || e.key===' '){ e.preventDefault(); toggle(row.dataset.id); } });
+    });
+  }
+  function toggle(id){
+    var before=stats(state.role,state.checked).pct;
+    if(state.checked[id]) delete state.checked[id]; else state.checked[id]=true;
+    save(state.role,state.checked);
+    var after=updateProgress().pct;
+    renderChecklist();
+    if(after===100 && before<100){ setTimeout(function(){ $('successOverlay').classList.add('active'); }, 230); }
+  }
+  $('backBtn').addEventListener('click',function(){ list.classList.remove('active'); home.classList.add('active'); renderHome(); window.scrollTo({top:0,behavior:'auto'}); });
+  $('topBtn').addEventListener('click',function(){ window.scrollTo({top:0,behavior:'smooth'}); });
+  $('resetBtn').addEventListener('click',function(){ $('resetOverlay').classList.add('active'); });
+  $('cancelReset').addEventListener('click',function(){ $('resetOverlay').classList.remove('active'); });
+  $('confirmReset').addEventListener('click',function(){ state.checked={}; save(state.role,state.checked); updateProgress(); renderChecklist(); $('resetOverlay').classList.remove('active'); });
+  $('closeSuccess').addEventListener('click',function(){ $('successOverlay').classList.remove('active'); });
+  ['resetOverlay','successOverlay'].forEach(function(id){ $(id).addEventListener('click',function(e){ if(e.target===$(id)) $(id).classList.remove('active'); }); });
+  $('searchInput').addEventListener('input',function(e){ state.search=e.target.value; renderChecklist(); });
+  document.querySelectorAll('.segment button').forEach(function(btn){ btn.addEventListener('click',function(){ state.filter=btn.dataset.filter; document.querySelectorAll('.segment button').forEach(function(b){ b.classList.toggle('active', b===btn); }); renderChecklist(); }); });
+
+  var deferredPrompt=null, installBtn=$('installBtn');
+  window.addEventListener('beforeinstallprompt',function(e){ e.preventDefault(); deferredPrompt=e; installBtn.classList.add('show'); });
+  installBtn.addEventListener('click',function(){ if(!deferredPrompt) return; deferredPrompt.prompt(); deferredPrompt.userChoice.finally(function(){ deferredPrompt=null; installBtn.classList.remove('show'); }); });
+  window.addEventListener('appinstalled',function(){ installBtn.classList.remove('show'); });
+  (function iosHint(){
+    var isIOS=/iphone|ipad|ipod/i.test(navigator.userAgent);
+    var standalone=window.navigator.standalone===true || window.matchMedia('(display-mode: standalone)').matches;
+    var dismissed=CAN_STORE && localStorage.getItem('rail_ios_hint_v3');
+    if(isIOS && !standalone && !dismissed){ setTimeout(function(){ $('iosSheet').classList.add('show'); }, 1200); }
+    $('closeIosSheet').addEventListener('click',function(){ $('iosSheet').classList.remove('show'); if(CAN_STORE) localStorage.setItem('rail_ios_hint_v3','1'); });
+  })();
+  if('serviceWorker' in navigator){ window.addEventListener('load',function(){ navigator.serviceWorker.register('sw.js').catch(function(){}); }); }
+  renderHome();
+})();
+</script>
+</body>
+</html>

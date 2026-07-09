@@ -1,0 +1,33 @@
+{
+  "name": "צ'קליסט חפיפות - אגף ביטחון רכבת ישראל",
+  "short_name": "חפיפות רכבת",
+  "description": "מערכת מובייל בהירה למעקב אחר חפיפות מאבטחים ובודקים ביטחוניים",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#f4f7fb",
+  "theme_color": "#f4f7fb",
+  "lang": "he",
+  "dir": "rtl",
+  "icons": [
+    {
+      "src": "icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icons/icon-maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}
