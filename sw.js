@@ -1,5 +1,6 @@
-// Service worker - handover checklist PWA light v4
-const CACHE_NAME = 'il-rail-handover-light-root-v5';
+// Service worker - handover checklist PWA cloud v5
+// חשוב: CACHE_NAME שונה מהגרסה הקודמת כדי לאלץ טעינת index.html חדש
+const CACHE_NAME = 'il-rail-handover-cloud-v6';
 const APP_SHELL = [
   './',
   './index.html',
@@ -20,6 +21,7 @@ self.addEventListener('activate', event => {
 });
 self.addEventListener('fetch', event => {
   const req = event.request;
+  // קריאות לשרת הנתונים הן POST ולכן עוברות ישירות לרשת ולא נשמרות במטמון
   if (req.method !== 'GET') return;
   const isNavigation = req.mode === 'navigate';
   const isIcon = (/\/(favicon-16|favicon-32|apple-touch-icon|icon-192|icon-512|icon-maskable-512)\.png($|\?)/).test(req.url);
