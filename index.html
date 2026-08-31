@@ -233,11 +233,138 @@ button{touch-action:manipulation}
   body{background-color:var(--bg)}.app-shell{max-width:620px}.role-grid{grid-template-columns:1fr 1fr}.role-card{grid-template-columns:76px 1fr;min-height:168px;align-items:start}.role-ring{grid-column:1/-1;justify-self:end;margin-top:-54px}.check-item{grid-template-columns:36px 1fr 30px}.filter-box{grid-template-columns:1fr 250px}
 }
 
+
+/* ===== GATE SCREEN ===== */
+#gateScreen .app-shell{padding-top:calc(var(--safe-t) + 18px);padding-bottom:calc(var(--safe-b) + 28px);display:flex;flex-direction:column}
+#createScreen .app-shell{padding-top:calc(var(--safe-t) + 12px);padding-bottom:calc(var(--safe-b) + 34px)}
+.gate-stack{display:grid;gap:14px}
+.gate-card{
+  position:relative;overflow:hidden;border-radius:28px;border:1px solid var(--line);padding:20px 18px;
+  background:linear-gradient(155deg,#ffffff,#f7fbff);box-shadow:var(--shadow-soft);
+}
+.gate-card.accent{background:linear-gradient(155deg,#f2f9ff,#ffffff);border-color:rgba(25,118,210,.22)}
+.gate-head{display:flex;align-items:center;gap:12px;margin-bottom:14px}
+.gate-icon{width:52px;height:52px;flex:0 0 auto;border-radius:19px;display:grid;place-items:center;background:linear-gradient(160deg,#eef6ff,#ffffff);border:1px solid var(--line)}
+.gate-icon svg{width:24px;height:24px;stroke:var(--blue)}
+.gate-copy{min-width:0;flex:1}
+.gate-copy h3{margin:0 0 4px;font-size:17px;font-weight:950;color:var(--text)}
+.gate-copy p{margin:0;color:var(--muted);font-size:12.5px;line-height:1.5}
+.code-field{
+  width:100%;height:62px;border-radius:20px;border:1px solid var(--line-strong);background:#fff;color:var(--text);
+  text-align:center;font-family:var(--mono);font-size:30px;font-weight:900;letter-spacing:12px;text-indent:12px;
+  outline:none;box-shadow:inset 0 2px 6px rgba(18,42,74,.05);
+}
+.code-field::placeholder{letter-spacing:6px;font-size:17px;font-weight:800;color:var(--faint);text-indent:0}
+.code-field:focus{border-color:rgba(25,118,210,.5);box-shadow:0 0 0 4px rgba(25,118,210,.10)}
+.primary-btn{
+  width:100%;border:0;border-radius:19px;padding:16px 14px;font-weight:950;font-size:15px;cursor:pointer;
+  color:#fff;background:linear-gradient(135deg,#2f8bf0,#1976d2);box-shadow:0 12px 28px rgba(25,118,210,.24);
+  display:flex;align-items:center;justify-content:center;gap:9px;
+}
+.primary-btn:active{transform:scale(.985)}
+.primary-btn[disabled]{opacity:.55;cursor:default;box-shadow:none}
+.primary-btn svg{width:18px;height:18px}
+.primary-btn.ghost{background:#fff;color:var(--blue);border:1px solid rgba(25,118,210,.28);box-shadow:var(--shadow-soft)}
+.stack-gap{margin-top:12px}
+.form-error{margin-top:11px;color:#b4232d;font-size:12.5px;font-weight:800;line-height:1.5;display:none}
+.form-error.show{display:block}
+
+/* ===== CREATE SCREEN ===== */
+.step-label{display:flex;align-items:center;gap:9px;margin:20px 3px 11px}
+.step-num{width:25px;height:25px;border-radius:9px;display:grid;place-items:center;background:var(--navy);color:#fff;font-family:var(--mono);font-size:12px;font-weight:900;flex:0 0 auto}
+.step-label b{font-size:14px;font-weight:950;color:var(--text)}
+.step-label span{font-size:11.5px;color:var(--faint);font-weight:800}
+.type-grid{display:grid;gap:10px}
+.type-card{
+  display:grid;grid-template-columns:48px 1fr 22px;align-items:center;gap:12px;width:100%;text-align:right;
+  padding:14px;border-radius:22px;border:1px solid var(--line);background:#fff;cursor:pointer;color:var(--text);
+  box-shadow:0 7px 18px rgba(18,42,74,.05);transition:border-color .16s ease,background .16s ease,transform .1s ease;
+}
+.type-card:active{transform:scale(.99)}
+.type-card.selected{border-color:rgba(25,118,210,.55);background:linear-gradient(180deg,#f2f9ff,#ffffff);box-shadow:0 10px 26px rgba(25,118,210,.13)}
+.type-card .t-icon{width:48px;height:48px;border-radius:17px;display:grid;place-items:center;background:linear-gradient(160deg,#eef6ff,#ffffff);border:1px solid var(--line)}
+.type-card .t-icon svg{width:22px;height:22px;stroke:var(--blue)}
+.type-card .t-copy{min-width:0}
+.type-card .t-copy b{display:block;font-size:15px;font-weight:950;margin-bottom:3px}
+.type-card .t-copy span{font-size:11.5px;color:var(--muted);font-family:var(--mono)}
+.type-card .t-tick{width:22px;height:22px;border-radius:50%;border:2px solid #cdd9e7;display:grid;place-items:center}
+.type-card .t-tick i{width:10px;height:10px;border-radius:50%;background:transparent;transition:background .16s ease}
+.type-card.selected .t-tick{border-color:var(--blue)}
+.type-card.selected .t-tick i{background:var(--blue)}
+.sector-box{display:none;margin-top:11px;padding:14px;border-radius:20px;border:1px dashed var(--line-strong);background:rgba(255,255,255,.7)}
+.sector-box.show{display:block}
+.sector-box>b{display:block;font-size:12.5px;font-weight:950;margin-bottom:10px;color:var(--text)}
+.sector-row{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.sector-chip{border:1px solid var(--line);background:#fff;border-radius:15px;padding:12px 6px;font-weight:900;font-size:13px;color:var(--muted);cursor:pointer}
+.sector-chip.selected{background:linear-gradient(135deg,#2f8bf0,#1976d2);color:#fff;border-color:transparent;box-shadow:0 8px 20px rgba(25,118,210,.22)}
+.emp-card{border:1px solid var(--line);border-radius:22px;background:#fff;padding:14px;margin-bottom:10px;box-shadow:0 7px 18px rgba(18,42,74,.05)}
+.emp-top{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:11px}
+.emp-top b{font-size:13px;font-weight:950;color:var(--text);display:flex;align-items:center;gap:8px}
+.emp-badge{width:24px;height:24px;border-radius:9px;background:#eef6ff;border:1px solid var(--line);display:grid;place-items:center;font-family:var(--mono);font-size:11px;color:var(--blue);font-weight:900}
+.emp-del{border:1px solid #ffd2d6;background:#fff6f7;color:#b4232d;border-radius:11px;width:30px;height:30px;cursor:pointer;font-size:17px;line-height:1;font-weight:900}
+.emp-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+.emp-grid .full{grid-column:1/-1}
+.f-input{
+  width:100%;height:46px;border-radius:15px;border:1px solid var(--line);background:#f9fcff;color:var(--text);
+  padding:0 12px;outline:none;font-size:16px;
+}
+.f-input::placeholder{color:var(--faint);font-size:13.5px}
+.f-input:focus{border-color:rgba(25,118,210,.45);background:#fff;box-shadow:0 0 0 3px rgba(25,118,210,.09)}
+.f-input.bad{border-color:#f2a6ab;background:#fff8f8}
+.add-emp{
+  width:100%;border:1px dashed var(--line-strong);background:rgba(255,255,255,.6);border-radius:18px;padding:14px;
+  color:var(--blue);font-weight:900;font-size:13.5px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;
+}
+.add-emp[disabled]{opacity:.45;cursor:default;color:var(--faint)}
+.add-emp svg{width:16px;height:16px}
+
+/* ===== GROUP BANNER ON LIST ===== */
+.group-banner{
+  border:1px solid var(--line);border-radius:24px;padding:15px;margin-bottom:13px;
+  background:linear-gradient(150deg,#ffffff,#f2f8ff);box-shadow:var(--shadow-soft);
+}
+.gb-top{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:11px}
+.gb-code{display:flex;align-items:center;gap:9px}
+.gb-code .lbl{font-size:10.5px;color:var(--faint);font-weight:900;letter-spacing:.6px}
+.gb-code .val{font-family:var(--mono);font-size:22px;font-weight:1000;color:var(--navy);letter-spacing:3px}
+.sync-pill{display:flex;align-items:center;gap:6px;font-size:11px;font-weight:900;color:var(--green);background:#eefdf6;border:1px solid rgba(24,168,107,.25);border-radius:999px;padding:6px 10px}
+.sync-pill i{width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 8px rgba(24,168,107,.5)}
+.sync-pill.off{color:#b4232d;background:#fff6f7;border-color:#ffd2d6}
+.sync-pill.off i{background:var(--red);box-shadow:none}
+.emp-chips{display:flex;flex-wrap:wrap;gap:7px}
+.emp-chip{background:#fff;border:1px solid var(--line);border-radius:13px;padding:8px 10px;font-size:12px;font-weight:850;color:var(--text);line-height:1.35}
+.emp-chip small{display:block;font-family:var(--mono);font-size:10px;color:var(--faint);font-weight:800;margin-top:2px}
+
+/* ===== CODE RESULT MODAL ===== */
+.code-show{
+  font-family:var(--mono);font-size:44px;font-weight:1000;letter-spacing:10px;text-indent:10px;color:var(--navy);
+  background:#f2f8ff;border:1px solid var(--line-strong);border-radius:22px;padding:18px 10px;margin:0 0 18px;
+}
+.modal .modal-note{font-size:12px;color:var(--faint);margin:-8px 0 18px;line-height:1.55}
+.modal .code-field{margin-bottom:18px}
+
+/* ===== TOAST ===== */
+.toast{
+  position:fixed;left:14px;right:14px;bottom:calc(var(--safe-b) + 16px);z-index:60;
+  background:var(--navy);color:#fff;border-radius:18px;padding:14px 16px;font-size:13.5px;font-weight:800;line-height:1.5;
+  box-shadow:0 20px 50px rgba(18,42,74,.28);opacity:0;transform:translateY(14px);pointer-events:none;transition:all .22s ease;
+  max-width:520px;margin:0 auto;text-align:center;
+}
+.toast.show{opacity:1;transform:translateY(0)}
+.toast.bad{background:#a51f28}
+
+@media (max-width:360px){
+  .emp-grid{grid-template-columns:1fr}
+  .code-show{font-size:36px;letter-spacing:7px}
+  .type-card{grid-template-columns:42px 1fr 20px}
+}
 </style>
 </head>
 <body>
 <div id="app">
-  <main class="screen active" id="homeScreen">
+
+  <!-- ============ מסך כניסה ============ -->
+  <main class="screen active" id="gateScreen">
     <div class="app-shell">
       <header class="home-top">
         <div class="logo-card"><img src="icon-192.png" alt="לוגו" /></div>
@@ -250,20 +377,93 @@ button{touch-action:manipulation}
           התקנה
         </button>
       </header>
+
       <section class="hero-card">
         <div class="chip"><span class="live-dot"></span>מערכת מוכנה לעבודה</div>
-        <h2>בחר סוג חפיפה</h2>
-        <p>מסך מובייל מלא עם צ'קליסט מסודר, מעקב אחוזים לפי סעיפים, שמירה אוטומטית ואיפוס מאובטח עם אישור.</p>
+        <h2>ברוך הבא</h2>
+        <p>הזן קוד זיהוי כדי להצטרף לתהליך חפיפות קיים, או פתח תהליך חדש עבור קבוצת עובדים.</p>
       </section>
-      <section class="role-grid" id="roleGrid" aria-label="בחירת סוג חפיפה"></section>
-      <footer class="home-footer">HANDOVER CHECKLIST // MOBILE PWA // LIGHT v4</footer>
+
+      <div class="gate-stack">
+        <section class="gate-card accent">
+          <div class="gate-head">
+            <div class="gate-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>
+            <div class="gate-copy">
+              <h3>כניסה עם קוד זיהוי</h3>
+              <p>ארבע ספרות שקיבלת מפותח התהליך</p>
+            </div>
+          </div>
+          <input class="code-field" id="gateCode" type="text" inputmode="numeric" pattern="[0-9]*" maxlength="4" autocomplete="off" placeholder="קוד זיהוי" />
+          <div class="form-error" id="gateError"></div>
+          <button class="primary-btn stack-gap" id="gateEnterBtn" type="button">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><path d="m10 17-5-5 5-5"/><path d="M15 12H5"/></svg>
+            כניסה לתהליך
+          </button>
+        </section>
+
+        <section class="gate-card">
+          <div class="gate-head">
+            <div class="gate-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14"/><path d="M5 12h14"/></svg></div>
+            <div class="gate-copy">
+              <h3>פתיחת תהליך חפיפות חדש</h3>
+              <p>בחירת סוג חפיפה והזנת העובדים הנחפפים</p>
+            </div>
+          </div>
+          <button class="primary-btn ghost" id="gateCreateBtn" type="button">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z"/><path d="M14 2v6h6"/><path d="M12 12v6"/><path d="M9 15h6"/></svg>
+            פתיחת תהליך חדש
+          </button>
+        </section>
+      </div>
+
+      <footer class="home-footer">HANDOVER CHECKLIST // CLOUD SYNC // v5</footer>
     </div>
   </main>
 
+  <!-- ============ מסך פתיחת תהליך ============ -->
+  <main class="screen" id="createScreen">
+    <div class="app-shell">
+      <header class="topbar">
+        <button class="icon-button" id="createBackBtn" type="button" aria-label="חזרה">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18 9 12l6-6"/></svg>
+        </button>
+        <div class="title-stack">
+          <div class="kicker">תהליך חדש</div>
+          <h1>פתיחת חפיפות</h1>
+        </div>
+      </header>
+
+      <div class="step-label"><span class="step-num">1</span><b>בחר סוג חפיפה</b></div>
+      <div class="type-grid" id="typeGrid"></div>
+      <div class="sector-box" id="sectorBox">
+        <b>בחר גזרה</b>
+        <div class="sector-row" id="sectorRow">
+          <button class="sector-chip" type="button" data-sector="tel_aviv">ת"א</button>
+          <button class="sector-chip" type="button" data-sector="binyamina">בנימינה</button>
+          <button class="sector-chip" type="button" data-sector="haifa">חיפה</button>
+        </div>
+      </div>
+
+      <div class="step-label"><span class="step-num">2</span><b>עובדים נחפפים</b><span id="empCounter">0/5</span></div>
+      <div id="empList"></div>
+      <button class="add-emp" id="addEmpBtn" type="button">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14"/><path d="M5 12h14"/></svg>
+        הוספת עובד
+      </button>
+
+      <div class="form-error" id="createError"></div>
+      <button class="primary-btn stack-gap" id="createSubmitBtn" type="button">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+        צור תהליך וקבל קוד זיהוי
+      </button>
+    </div>
+  </main>
+
+  <!-- ============ מסך החפיפה ============ -->
   <main class="screen" id="listScreen">
     <div class="app-shell">
       <header class="topbar">
-        <button class="icon-button" id="backBtn" type="button" aria-label="חזרה למסך ראשי">
+        <button class="icon-button" id="backBtn" type="button" aria-label="יציאה מהתהליך">
           <svg viewBox="0 0 24 24" fill="none" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18 9 12l6-6"/></svg>
         </button>
         <div class="title-stack">
@@ -271,6 +471,17 @@ button{touch-action:manipulation}
           <h1 id="roleTitle">-</h1>
         </div>
       </header>
+
+      <section class="group-banner">
+        <div class="gb-top">
+          <div class="gb-code">
+            <span class="lbl">קוד זיהוי</span>
+            <span class="val" id="gbCode">----</span>
+          </div>
+          <div class="sync-pill" id="syncPill"><i></i><span id="syncText">מסונכרן</span></div>
+        </div>
+        <div class="emp-chips" id="empChips"></div>
+      </section>
 
       <section class="progress-panel" id="progressPanel">
         <div class="progress-main">
@@ -285,17 +496,17 @@ button{touch-action:manipulation}
             <div class="status-row"><span>סעיפים שסומנו</span><b id="countText">0/0</b></div>
             <div class="status-row"><span>סטטוס חפיפה</span><b id="statusText">בהמתנה</b></div>
             <div class="big-track"><i id="progressBar"></i></div>
-            <div class="status-row"><span>צבע התקדמות</span><b id="colorText">אדום ← צהוב ← ירוק</b></div>
+            <div class="status-row"><span>עדכון אחרון</span><b id="syncTime">—</b></div>
           </div>
         </div>
         <div class="progress-actions">
           <button class="action-btn danger" id="resetBtn" type="button">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><path d="m19 6-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6M14 11v6"/></svg>
-            איפוס סעיפים
+            איפוס הדוח
           </button>
-          <button class="action-btn" id="topBtn" type="button">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5"/><path d="m5 12 7-7 7 7"/></svg>
-            חזרה למעלה
+          <button class="action-btn" id="refreshBtn" type="button">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 3v6h-6"/></svg>
+            רענון
           </button>
         </div>
       </section>
@@ -322,11 +533,25 @@ button{touch-action:manipulation}
   </main>
 </div>
 
+<!-- ============ מודאלים ============ -->
+<div class="overlay" id="codeOverlay" role="dialog" aria-modal="true" aria-label="קוד זיהוי">
+  <div class="modal">
+    <div class="modal-badge ok"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></div>
+    <h3>התהליך נפתח</h3>
+    <p>זה קוד הזיהוי של הקבוצה. כל מי שיזין אותו יראה וימשיך את אותה חפיפה.</p>
+    <div class="code-show" id="newCodeText">----</div>
+    <p class="modal-note">רשום את הקוד או שלח אותו לצוות. הוא נדרש גם לאיפוס הדוח.</p>
+    <div class="modal-actions single"><button class="modal-btn primary" id="codeContinue" type="button">המשך לחפיפה</button></div>
+  </div>
+</div>
+
 <div class="overlay" id="resetOverlay" role="dialog" aria-modal="true" aria-label="אישור איפוס">
   <div class="modal">
     <div class="modal-badge warn"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 9v4"/><path d="M12 17h.01"/><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0Z"/></svg></div>
-    <h3>לאפס את כל הסעיפים?</h3>
-    <p>ההתקדמות של החפיפה הנוכחית תימחק. הפעולה לא מוחקת את סוג החפיפה השני.</p>
+    <h3>לאפס את הדוח?</h3>
+    <p>כל הסעיפים שסומנו יימחקו עבור כל מי שמחובר לקוד הזה. רשימת העובדים תישאר.</p>
+    <input class="code-field" id="resetCode" type="text" inputmode="numeric" pattern="[0-9]*" maxlength="4" autocomplete="off" placeholder="קוד זיהוי" />
+    <div class="form-error" id="resetError"></div>
     <div class="modal-actions">
       <button class="modal-btn" id="cancelReset" type="button">ביטול</button>
       <button class="modal-btn danger" id="confirmReset" type="button">כן, אפס</button>
@@ -338,7 +563,7 @@ button{touch-action:manipulation}
   <div class="modal">
     <div class="modal-badge ok"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></div>
     <h3>כל הכבוד! 🎉</h3>
-    <p>עברת על כל חומר הנדרש. החפיפה הושלמה במלואה והמערכת עומדת על 100%.</p>
+    <p>עברתם על כל החומר הנדרש. החפיפה הושלמה במלואה והמערכת עומדת על 100%.</p>
     <div class="modal-actions single"><button class="modal-btn primary" id="closeSuccess" type="button">הבנתי, תודה</button></div>
   </div>
 </div>
@@ -349,8 +574,42 @@ button{touch-action:manipulation}
   <button id="closeIosSheet" type="button">×</button>
 </div>
 
+<div class="toast" id="toast"></div>
 <script>
 (function(){
+  "use strict";
+
+  /* ============================================================
+     חיבור לענן (Supabase)
+     ============================================================ */
+  var SUPABASE_URL = 'https://wmqgclxpixoqllmndmpo.supabase.co';
+  var SUPABASE_KEY = 'sb_publishable_KWvNMxVTtmn8NpRurS3OPw__R7XmVxk';
+
+  function rpc(fn, body){
+    return fetch(SUPABASE_URL + '/rest/v1/rpc/' + fn, {
+      method: 'POST',
+      headers: {
+        'apikey': SUPABASE_KEY,
+        'Authorization': 'Bearer ' + SUPABASE_KEY,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(body || {})
+    }).then(function(res){
+      return res.text().then(function(txt){
+        var data = null;
+        try{ data = txt ? JSON.parse(txt) : null; }catch(e){ data = null; }
+        if(!res.ok){
+          var msg = (data && (data.message || data.hint || data.details)) || ('שגיאת שרת (' + res.status + ')');
+          throw new Error(msg);
+        }
+        return data;
+      });
+    });
+  }
+
+  /* ============================================================
+     אייקונים
+     ============================================================ */
   var ICONS = {
     shield:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 19 6v6c0 4.5-3 8-7 9-4-1-7-4.5-7-9V6l7-3Z"/></svg>',
     search:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>',
@@ -362,9 +621,16 @@ button{touch-action:manipulation}
     alarm:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0Z"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg>',
     train:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3" width="16" height="14" rx="4"/><path d="M4 11h16"/><circle cx="8" cy="17.5" r="1.6"/><circle cx="16" cy="17.5" r="1.6"/><path d="m8 22 2-3"/><path d="m16 22-2-3"/></svg>',
     people:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>',
-    envelope:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>'
+    envelope:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>',
+    binoculars:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="16" r="4"/><circle cx="18" cy="16" r="4"/><path d="M6 12V5a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v7"/><path d="M14 12V5a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v7"/><path d="M10 9h4"/></svg>',
+    star:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l2.6 5.5 6 .9-4.3 4.3 1 6.1L12 17l-5.3 2.8 1-6.1L3.4 9.4l6-.9L12 3Z"/></svg>'
   };
+
+  /* ============================================================
+     תוכן הצ'קליסטים
+     ============================================================ */
   function item(text){ return { text:text }; }
+
   var BASE_SECTIONS = [
     { id:'opening', title:'פתיחת משמרת ותחנה', icon:'station', items:[
       item('אופן פתיחת משמרת ודיווח הגעה'),
@@ -419,6 +685,7 @@ button{touch-action:manipulation}
       item('נהלי חירום')
     ]}
   ];
+
   var GUARD_EXTRA = { id:'guardExtra', title:'תוספות ייעודיות למאבטחים', icon:'train', items:[
     item('ביצוע פתיחת ציר בפועל'),
     item('הכרות עם סוגרי רכבות'),
@@ -429,40 +696,97 @@ button{touch-action:manipulation}
     item('פתיחת רכבת בחירום מבחוץ ומבפנים'),
     item('עבודת איש ביטחון במעגל החיצוני ומטרתה')
   ]};
+
+  /* ------------------------------------------------------------
+     >>> להשלמה על ידך <<<
+     שני הסעיפים הבאים הם שלד זמני עבור חפיפות רמ"ש.
+     החלף את השורות item('...') בסעיפים האמיתיים.
+     חשוב: אחרי שינוי הסעיפים, קבוצות קיימות ימשיכו לעבוד,
+     אבל סימונים של סעיף שנמחק פשוט לא יוצגו.
+     ------------------------------------------------------------ */
+  var RAMASH_SECTOR_EXTRA = { id:'ramashSector', title:'ניהול גזרה ופיקוד', icon:'people', items:[
+    item('הכרת גזרת האחריות והתחנות שבתוכה'),
+    item('איוש נדרש לכל תחנה בגזרה'),
+    item('אופן קבלת תמונת מצב גזרתית והעברתה'),
+    item('ניהול סידור עבודה ותורנויות'),
+    item('אופן ביצוע ביקורות בתחנות הגזרה'),
+    item('טיפול בדיווחי מאבטחים ובודקים ביטחוניים'),
+    item('ממשקי עבודה מול גורמי חוץ בגזרה'),
+    item('אופן העברת דיווח לדרג הממונה')
+  ]};
+
+  var RAMASH_BINOCULARS_EXTRA = { id:'ramashBino', title:'חפיפת רמ"ש משקפים', icon:'binoculars', items:[
+    item('הכרת תחומי האחריות של רמ"ש משקפים'),
+    item('אופן ביצוע תדריך משקף'),
+    item('מעקב אחר ביצוע משימות ודיווחן'),
+    item('ממשקי עבודה מול רמ"ש גזרה'),
+    item('אופן תיעוד וסיכום פעילות')
+  ]};
+  /* ------------------------------------------------------------ */
+
   var CLOSING = { id:'closing', title:'סיום חפיפה ואישורים', icon:'envelope', items:[
     item('קבלת חומרי חפיפה במעטפה'),
     item('ביצוע מבחן נהלים'),
     item('החתמה על חוברת נהלים')
   ]};
 
-  function cloneSections(sections){ return sections.map(function(sec){ return { id:sec.id, title:sec.title, icon:sec.icon, items:sec.items.map(function(x){return {text:x.text};})}; }); }
+  function cloneSections(sections){
+    return sections.map(function(sec){
+      return { id:sec.id, title:sec.title, icon:sec.icon, items:sec.items.map(function(x){ return {text:x.text}; }) };
+    });
+  }
+
+  /* המפתחות חייבים להתאים בדיוק ל-handover_type בבסיס הנתונים */
   var ROLES = {
-    guard:{ key:'guard', title:'חפיפת מאבטחים', shortTitle:'מאבטחים', kicker:'מסלול מאבטח רכבת', storage:'handover_guard_v3', icon:'shield', sections:cloneSections(BASE_SECTIONS).concat([GUARD_EXTRA, CLOSING]) },
-    inspector:{ key:'inspector', title:'חפיפת בודקים ביטחוניים', shortTitle:'בודקים ביטחוניים', kicker:'מסלול בודק ביטחוני', storage:'handover_inspector_v3', icon:'search', sections:cloneSections(BASE_SECTIONS).concat([CLOSING]) }
+    guards:{
+      key:'guards', title:'חפיפת מאבטחים', shortTitle:'מאבטחים',
+      kicker:'מסלול מאבטח רכבת', icon:'shield',
+      sections:cloneSections(BASE_SECTIONS).concat([GUARD_EXTRA, CLOSING])
+    },
+    inspectors:{
+      key:'inspectors', title:'חפיפת בודקים ביטחוניים', shortTitle:'בודקים ביטחוניים',
+      kicker:'מסלול בודק ביטחוני', icon:'search',
+      sections:cloneSections(BASE_SECTIONS).concat([CLOSING])
+    },
+    sector_manager:{
+      key:'sector_manager', title:'חפיפת רמ"ש גזרה', shortTitle:'רמ"ש גזרה',
+      kicker:'מסלול ראש משמרת גזרה', icon:'people', needsSector:true,
+      sections:cloneSections(BASE_SECTIONS).concat([RAMASH_SECTOR_EXTRA, CLOSING])
+    },
+    binoculars_manager:{
+      key:'binoculars_manager', title:'חפיפת רמ"ש משקפים', shortTitle:'רמ"ש משקפים',
+      kicker:'מסלול רמ"ש משקפים', icon:'binoculars',
+      sections:cloneSections(BASE_SECTIONS).concat([RAMASH_BINOCULARS_EXTRA, CLOSING])
+    }
   };
-  var roleOrder = ['guard','inspector'];
+  var roleOrder = ['guards','inspectors','sector_manager','binoculars_manager'];
+  var SECTORS = { tel_aviv:'ת"א', binyamina:'בנימינה', haifa:'חיפה' };
+
   function flatten(role){
-    var out=[]; var n=1;
+    var out=[], n=1;
     role.sections.forEach(function(sec){
-      sec.items.forEach(function(it, idx){ out.push({ id:sec.id+'_'+idx, text:it.text, sectionId:sec.id, sectionTitle:sec.title, sectionIcon:sec.icon, num:n++ }); });
+      sec.items.forEach(function(it, idx){
+        out.push({ id:sec.id+'_'+idx, text:it.text, sectionId:sec.id, sectionTitle:sec.title, sectionIcon:sec.icon, num:n++ });
+      });
     });
     return out;
   }
   function getItems(role){ if(!role._items) role._items = flatten(role); return role._items; }
+
+  /* ============================================================
+     אחסון מקומי - רק לזיכרון החיבור ולתצוגה במצב לא מקוון
+     ============================================================ */
   function storageOK(){ try{ var k='__rail_test__'; localStorage.setItem(k,'1'); localStorage.removeItem(k); return true; }catch(e){ return false; } }
   var CAN_STORE = storageOK();
-  var mem = {};
-  function load(role){
-    if(CAN_STORE){ try{ return JSON.parse(localStorage.getItem(role.storage)||'{}') || {}; }catch(e){ return {}; } }
-    return mem[role.storage] || {};
-  }
-  function save(role, data){ mem[role.storage] = data; if(CAN_STORE){ try{ localStorage.setItem(role.storage, JSON.stringify(data)); }catch(e){} } }
-  function stats(role, checked){
-    var items=getItems(role); var done=0;
-    items.forEach(function(it){ if(checked[it.id]) done++; });
-    var pct=items.length ? Math.round(done/items.length*100) : 0;
-    return { total:items.length, done:done, pct:pct };
-  }
+  function lsGet(k){ if(!CAN_STORE) return null; try{ return localStorage.getItem(k); }catch(e){ return null; } }
+  function lsSet(k,v){ if(!CAN_STORE) return; try{ localStorage.setItem(k,v); }catch(e){} }
+  function lsDel(k){ if(!CAN_STORE) return; try{ localStorage.removeItem(k); }catch(e){} }
+  var LS_CODE = 'handover_active_code_v5';
+  function snapKey(code){ return 'handover_snap_v5_' + code; }
+
+  /* ============================================================
+     כלי עזר
+     ============================================================ */
   function hexToRgb(hex){ hex=hex.replace('#',''); return {r:parseInt(hex.slice(0,2),16),g:parseInt(hex.slice(2,4),16),b:parseInt(hex.slice(4,6),16)}; }
   function lerp(a,b,t){ return a+(b-a)*t; }
   function rgb(o){ return 'rgb('+Math.round(o.r)+','+Math.round(o.g)+','+Math.round(o.b)+')'; }
@@ -473,49 +797,306 @@ button{touch-action:manipulation}
     var y=(t-.55)/.45; return rgb({r:lerp(AMBER.r,GREEN.r,y),g:lerp(AMBER.g,GREEN.g,y),b:lerp(AMBER.b,GREEN.b,y)});
   }
   function statusFor(p){ if(p===0) return 'טרם התחיל'; if(p<35) return 'בתחילת חפיפה'; if(p<75) return 'מתקדם'; if(p<100) return 'לקראת סיום'; return 'הושלם ✓'; }
-  function esc(s){ return String(s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];}); }
-
-  var state={ role:null, checked:{}, filter:'all', search:'' };
+  function esc(s){ return String(s==null?'':s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];}); }
+  function clockNow(){ var d=new Date(); return String(d.getHours()).padStart(2,'0')+':'+String(d.getMinutes()).padStart(2,'0'); }
   var $=function(id){ return document.getElementById(id); };
-  var home=$('homeScreen'), list=$('listScreen'), roleGrid=$('roleGrid'), checklist=$('checklist'), empty=$('emptyState');
-  var gaugeFg=$('gaugeFg'), pctText=$('pctText'), countText=$('countText'), statusText=$('statusText'), colorText=$('colorText'), progressBar=$('progressBar');
-  var CIRC=2*Math.PI*41, RING=2*Math.PI*25;
 
-  function renderHome(){
-    roleGrid.innerHTML='';
+  var toastEl=$('toast'), toastTimer=null;
+  function toast(msg, bad){
+    toastEl.textContent=msg;
+    toastEl.classList.toggle('bad', !!bad);
+    toastEl.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer=setTimeout(function(){ toastEl.classList.remove('show'); }, 3200);
+  }
+  function showErr(elId, msg){ var el=$(elId); el.textContent=msg; el.classList.add('show'); }
+  function hideErr(elId){ $(elId).classList.remove('show'); }
+
+  /* משנה כפתור למצב "עסוק" בלי לאבד את האייקון שבתוכו */
+  function busy(btn, on, label){
+    if(on){
+      if(btn._html===undefined) btn._html=btn.innerHTML;
+      btn.disabled=true; btn.textContent=label;
+    }else{
+      btn.disabled=false;
+      if(btn._html!==undefined) btn.innerHTML=btn._html;
+    }
+  }
+
+  /* ============================================================
+     מצב האפליקציה
+     ============================================================ */
+  var state = {
+    code:null, group:null, employees:[], role:null,
+    checked:{}, filter:'all', search:'',
+    offline:false, pending:0
+  };
+
+  var gate=$('gateScreen'), create=$('createScreen'), list=$('listScreen');
+  var checklist=$('checklist'), empty=$('emptyState');
+  var gaugeFg=$('gaugeFg'), pctText=$('pctText'), countText=$('countText'), statusText=$('statusText'), progressBar=$('progressBar');
+  var CIRC=2*Math.PI*41;
+
+  function showScreen(el){
+    [gate, create, list].forEach(function(s){ s.classList.toggle('active', s===el); });
+    window.scrollTo({top:0, behavior:'auto'});
+  }
+
+  /* ============================================================
+     מסך פתיחת תהליך חדש
+     ============================================================ */
+  var draft = { type:null, sector:null, employees:[ blankEmp() ] };
+  function blankEmp(){ return { first_name:'', last_name:'', role:'', employee_number:'' }; }
+
+  function renderTypeGrid(){
+    var grid=$('typeGrid'); grid.innerHTML='';
     roleOrder.forEach(function(key){
-      var role=ROLES[key], checked=load(role), s=stats(role,checked), color=colorFor(s.pct), offset=RING*(1-s.pct/100);
-      var card=document.createElement('button');
-      card.type='button';
-      card.className='role-card'+(s.pct===100?' complete':'');
-      card.innerHTML='<div class="role-icon">'+ICONS[role.icon]+'</div>'+
-        '<div class="role-text"><h3>'+esc(role.shortTitle)+'</h3><div class="desc">'+esc(role.kicker)+' · '+s.total+' סעיפים</div><div class="role-progress"><div class="tiny-track"><i style="width:'+s.pct+'%;background:'+color+'"></i></div><div class="tiny-count">'+s.done+'/'+s.total+'</div></div></div>'+
-        '<div class="role-ring"><svg viewBox="0 0 58 58"><circle class="bg" cx="29" cy="29" r="25"></circle><circle class="fg" cx="29" cy="29" r="25" stroke="'+color+'" stroke-dasharray="'+RING+'" stroke-dashoffset="'+offset+'"></circle></svg><b>'+s.pct+'%</b></div>';
-      card.addEventListener('click',function(){ openRole(role); });
-      roleGrid.appendChild(card);
+      var role=ROLES[key];
+      var total=getItems(role).length;
+      var btn=document.createElement('button');
+      btn.type='button';
+      btn.className='type-card'+(draft.type===key?' selected':'');
+      btn.innerHTML='<div class="t-icon">'+ICONS[role.icon]+'</div>'+
+        '<div class="t-copy"><b>'+esc(role.title)+'</b><span>'+total+' סעיפים</span></div>'+
+        '<div class="t-tick"><i></i></div>';
+      btn.addEventListener('click', function(){
+        draft.type=key;
+        if(!ROLES[key].needsSector) draft.sector=null;
+        renderTypeGrid();
+        $('sectorBox').classList.toggle('show', !!ROLES[key].needsSector);
+        renderSectorRow();
+        hideErr('createError');
+      });
+      grid.appendChild(btn);
     });
   }
-  function openRole(role){
-    state.role=role; state.checked=load(role); state.filter='all'; state.search='';
+  function renderSectorRow(){
+    document.querySelectorAll('#sectorRow .sector-chip').forEach(function(chip){
+      chip.classList.toggle('selected', draft.sector===chip.dataset.sector);
+    });
+  }
+  document.querySelectorAll('#sectorRow .sector-chip').forEach(function(chip){
+    chip.addEventListener('click', function(){ draft.sector=chip.dataset.sector; renderSectorRow(); hideErr('createError'); });
+  });
+
+  function renderEmpList(){
+    var wrap=$('empList'); wrap.innerHTML='';
+    draft.employees.forEach(function(emp, i){
+      var card=document.createElement('div');
+      card.className='emp-card';
+      card.innerHTML=
+        '<div class="emp-top"><b><span class="emp-badge">'+(i+1)+'</span>עובד נחפף</b>'+
+        (draft.employees.length>1 ? '<button class="emp-del" type="button" data-del="'+i+'" aria-label="הסרת עובד">×</button>' : '')+
+        '</div>'+
+        '<div class="emp-grid">'+
+          '<input class="f-input" data-i="'+i+'" data-f="first_name" placeholder="שם פרטי" value="'+esc(emp.first_name)+'" />'+
+          '<input class="f-input" data-i="'+i+'" data-f="last_name" placeholder="שם משפחה" value="'+esc(emp.last_name)+'" />'+
+          '<input class="f-input" data-i="'+i+'" data-f="role" placeholder="תפקיד" value="'+esc(emp.role)+'" />'+
+          '<input class="f-input" data-i="'+i+'" data-f="employee_number" inputmode="numeric" placeholder="מספר עובד" value="'+esc(emp.employee_number)+'" />'+
+        '</div>';
+      wrap.appendChild(card);
+    });
+    wrap.querySelectorAll('.f-input').forEach(function(inp){
+      inp.addEventListener('input', function(){
+        draft.employees[+inp.dataset.i][inp.dataset.f]=inp.value;
+        inp.classList.remove('bad');
+        hideErr('createError');
+      });
+    });
+    wrap.querySelectorAll('[data-del]').forEach(function(btn){
+      btn.addEventListener('click', function(){
+        draft.employees.splice(+btn.dataset.del, 1);
+        renderEmpList();
+      });
+    });
+    $('empCounter').textContent = draft.employees.length + '/5';
+    $('addEmpBtn').disabled = draft.employees.length >= 5;
+  }
+
+  $('addEmpBtn').addEventListener('click', function(){
+    if(draft.employees.length>=5){ toast('ניתן להזין עד 5 עובדים'); return; }
+    draft.employees.push(blankEmp());
+    renderEmpList();
+  });
+
+  $('gateCreateBtn').addEventListener('click', function(){
+    draft={ type:null, sector:null, employees:[ blankEmp() ] };
+    hideErr('createError');
+    renderTypeGrid();
+    $('sectorBox').classList.remove('show');
+    renderEmpList();
+    showScreen(create);
+  });
+  $('createBackBtn').addEventListener('click', function(){ showScreen(gate); });
+
+  $('createSubmitBtn').addEventListener('click', function(){
+    hideErr('createError');
+    if(!draft.type){ showErr('createError','יש לבחור סוג חפיפה.'); return; }
+    if(ROLES[draft.type].needsSector && !draft.sector){ showErr('createError','יש לבחור גזרה: ת"א / בנימינה / חיפה.'); return; }
+
+    var bad=false;
+    document.querySelectorAll('#empList .f-input').forEach(function(inp){
+      if(!inp.value.trim()){ inp.classList.add('bad'); bad=true; }
+    });
+    if(bad){ showErr('createError','עבור כל עובד חובה להזין שם, שם משפחה, תפקיד ומספר עובד.'); return; }
+
+    var btn=$('createSubmitBtn');
+    busy(btn, true, 'יוצר תהליך...');
+    rpc('create_handover_group', {
+      p_handover_type: draft.type,
+      p_sector: draft.sector,
+      p_created_by: null,
+      p_employees: draft.employees.map(function(e){
+        return {
+          first_name:e.first_name.trim(), last_name:e.last_name.trim(),
+          role:e.role.trim(), employee_number:e.employee_number.trim()
+        };
+      })
+    }).then(function(res){
+      var code = res && res.code;
+      if(!code) throw new Error('לא התקבל קוד זיהוי מהשרת');
+      $('newCodeText').textContent=code;
+      $('codeOverlay').classList.add('active');
+      $('codeContinue').onclick=function(){
+        $('codeOverlay').classList.remove('active');
+        enterCode(code);
+      };
+    }).catch(function(err){
+      showErr('createError', err.message || 'שגיאה ביצירת התהליך. בדוק חיבור לאינטרנט.');
+    }).finally(function(){ busy(btn, false); });
+  });
+
+  /* ============================================================
+     כניסה לתהליך
+     ============================================================ */
+  function applySnapshot(data){
+    var g=data.group;
+    var role=ROLES[g.handover_type];
+    if(!role) throw new Error('סוג חפיפה לא מוכר: '+g.handover_type);
+
+    state.code=g.code;
+    state.group=g;
+    state.employees=data.employees||[];
+    state.role=role;
+    state.checked={};
+    (data.items||[]).forEach(function(it){ if(it.is_checked) state.checked[it.item_key]=true; });
+  }
+
+  /* חתימה של הסימונים - כדי לרנדר מחדש רק כשמשהו באמת השתנה */
+  function checkedSig(){ return Object.keys(state.checked).sort().join('|'); }
+
+  var entering=false;
+  function enterCode(code, silent){
+    code=String(code||'').trim();
+    if(!/^\d{4}$/.test(code)){ showErr('gateError','קוד זיהוי חייב להיות 4 ספרות.'); return; }
+    if(entering) return;
+    entering=true;
+    var btn=$('gateEnterBtn');
+    if(!silent) busy(btn, true, 'מתחבר...');
+    hideErr('gateError');
+    state.filter='all'; state.search='';
+
+    rpc('get_handover_by_code', { p_code: code }).then(function(data){
+      applySnapshot(data);
+      lsSet(LS_CODE, code);
+      lsSet(snapKey(code), JSON.stringify(data));
+      state.offline=false;
+      openList();
+    }).catch(function(err){
+      var cached=lsGet(snapKey(code));
+      if(cached && /Failed to fetch|NetworkError|network/i.test(err.message||'')){
+        try{
+          applySnapshot(JSON.parse(cached));
+          state.offline=true;
+          lsSet(LS_CODE, code);
+          openList();
+          toast('אין חיבור לשרת - מוצג מצב שמור, לא ניתן לסמן', true);
+          return;
+        }catch(e){}
+      }
+      showErr('gateError', err.message || 'לא ניתן להתחבר. בדוק חיבור לאינטרנט.');
+      showScreen(gate);
+    }).finally(function(){
+      entering=false;
+      if(!silent) busy(btn, false);
+    });
+  }
+
+  $('gateEnterBtn').addEventListener('click', function(){ enterCode($('gateCode').value); });
+  $('gateCode').addEventListener('input', function(e){
+    e.target.value=e.target.value.replace(/\D/g,'').slice(0,4);
+    hideErr('gateError');
+    if(e.target.value.length===4) enterCode(e.target.value);
+  });
+  $('gateCode').addEventListener('keydown', function(e){ if(e.key==='Enter') enterCode(e.target.value); });
+
+  /* ============================================================
+     מסך החפיפה
+     ============================================================ */
+  function openList(){
+    var role=state.role, g=state.group;
+    var title=role.title;
+    if(g.sector && SECTORS[g.sector]) title += ' · ' + SECTORS[g.sector];
+    $('roleKicker').textContent=role.kicker;
+    $('roleTitle').textContent=title;
+    $('gbCode').textContent=state.code;
     $('searchInput').value='';
     document.querySelectorAll('.segment button').forEach(function(b){ b.classList.toggle('active', b.dataset.filter==='all'); });
-    $('roleKicker').textContent=role.kicker; $('roleTitle').textContent=role.title;
-    home.classList.remove('active'); list.classList.add('active'); window.scrollTo({top:0,behavior:'auto'});
-    updateProgress(); renderChecklist();
+    renderEmpChips();
+    setSync(!state.offline);
+    showScreen(list);
+    updateProgress();
+    renderChecklist();
   }
+
+  function renderEmpChips(){
+    var wrap=$('empChips'); wrap.innerHTML='';
+    state.employees.forEach(function(e){
+      var d=document.createElement('div');
+      d.className='emp-chip';
+      d.innerHTML=esc(e.first_name+' '+e.last_name)+'<small>'+esc(e.role)+' · '+esc(e.employee_number)+'</small>';
+      wrap.appendChild(d);
+    });
+  }
+
+  function setSync(ok){
+    var pill=$('syncPill');
+    pill.classList.toggle('off', !ok);
+    $('syncText').textContent = ok ? 'מסונכרן' : 'לא מקוון';
+    if(ok) $('syncTime').textContent = clockNow();
+  }
+
+  function stats(){
+    var items=getItems(state.role), done=0;
+    items.forEach(function(it){ if(state.checked[it.id]) done++; });
+    return { total:items.length, done:done, pct: items.length ? Math.round(done/items.length*100) : 0 };
+  }
+
   function updateProgress(){
-    var s=stats(state.role,state.checked), color=colorFor(s.pct), offset=CIRC*(1-s.pct/100);
-    gaugeFg.setAttribute('stroke-dasharray',CIRC.toFixed(2)); gaugeFg.setAttribute('stroke-dashoffset',offset.toFixed(2)); gaugeFg.setAttribute('stroke',color);
+    var s=stats(), color=colorFor(s.pct), offset=CIRC*(1-s.pct/100);
+    gaugeFg.setAttribute('stroke-dasharray',CIRC.toFixed(2));
+    gaugeFg.setAttribute('stroke-dashoffset',offset.toFixed(2));
+    gaugeFg.setAttribute('stroke',color);
     pctText.textContent=s.pct+'%'; pctText.style.color=color;
-    countText.textContent=s.done+'/'+s.total; statusText.textContent=statusFor(s.pct); statusText.style.color=(s.pct===100?'var(--green)':'var(--text)');
-    progressBar.style.width=s.pct+'%'; progressBar.style.background=color; progressBar.style.boxShadow='0 0 18px '+color;
-    colorText.textContent=s.pct===100 ? 'ירוק מלא' : (s.pct>=40 ? 'מתקדם לצהוב/ירוק' : 'אדום - תחילת תהליך');
+    countText.textContent=s.done+'/'+s.total;
+    statusText.textContent=statusFor(s.pct);
+    statusText.style.color=(s.pct===100?'var(--green)':'var(--text)');
+    progressBar.style.width=s.pct+'%';
+    progressBar.style.background=color;
+    progressBar.style.boxShadow='0 0 18px '+color;
     return s;
   }
+
   function renderChecklist(){
-    var role=state.role, visible=0, query=state.search.trim().toLowerCase(); checklist.innerHTML='';
+    var role=state.role, visible=0, query=state.search.trim().toLowerCase();
+    checklist.innerHTML='';
     role.sections.forEach(function(sec){
-      var items=sec.items.map(function(it,idx){return { id:sec.id+'_'+idx, text:it.text, num:getItems(role).find(function(x){return x.id===sec.id+'_'+idx;}).num };}).filter(function(it){
+      var all=getItems(role);
+      var items=sec.items.map(function(it,idx){
+        var id=sec.id+'_'+idx;
+        var found=all.find(function(x){ return x.id===id; });
+        return { id:id, text:it.text, num:found?found.num:idx+1 };
+      }).filter(function(it){
         var done=!!state.checked[it.id];
         if(state.filter==='open' && done) return false;
         if(state.filter==='done' && !done) return false;
@@ -534,45 +1115,176 @@ button{touch-action:manipulation}
           '<div class="item-copy"><div class="item-title">'+esc(it.text)+'</div><div class="item-meta"><span>#'+String(it.num).padStart(2,'0')+'</span><span>'+esc(sec.title)+'</span></div></div>'+
           '<div class="item-mini-icon">'+ICONS[sec.icon]+'</div></div>';
       });
-      section.innerHTML=html; checklist.appendChild(section);
+      section.innerHTML=html;
+      checklist.appendChild(section);
     });
     empty.style.display=visible?'none':'block';
     checklist.querySelectorAll('.check-item').forEach(function(row){
       row.addEventListener('click',function(){ toggle(row.dataset.id); });
-      row.addEventListener('keydown',function(e){ if(e.key==='Enter' || e.key===' '){ e.preventDefault(); toggle(row.dataset.id); } });
+      row.addEventListener('keydown',function(e){ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); toggle(row.dataset.id); } });
     });
   }
+
+  function findMeta(id){
+    return getItems(state.role).find(function(x){ return x.id===id; }) || {};
+  }
+
   function toggle(id){
-    var before=stats(state.role,state.checked).pct;
-    if(state.checked[id]) delete state.checked[id]; else state.checked[id]=true;
-    save(state.role,state.checked);
+    if(state.offline){ toast('אין חיבור לשרת - לא ניתן לסמן כרגע', true); return; }
+
+    var before=stats().pct;
+    var next = !state.checked[id];
+    if(next) state.checked[id]=true; else delete state.checked[id];
+
     var after=updateProgress().pct;
     renderChecklist();
     if(after===100 && before<100){ setTimeout(function(){ $('successOverlay').classList.add('active'); }, 230); }
-  }
-  $('backBtn').addEventListener('click',function(){ list.classList.remove('active'); home.classList.add('active'); renderHome(); window.scrollTo({top:0,behavior:'auto'}); });
-  $('topBtn').addEventListener('click',function(){ window.scrollTo({top:0,behavior:'smooth'}); });
-  $('resetBtn').addEventListener('click',function(){ $('resetOverlay').classList.add('active'); });
-  $('cancelReset').addEventListener('click',function(){ $('resetOverlay').classList.remove('active'); });
-  $('confirmReset').addEventListener('click',function(){ state.checked={}; save(state.role,state.checked); updateProgress(); renderChecklist(); $('resetOverlay').classList.remove('active'); });
-  $('closeSuccess').addEventListener('click',function(){ $('successOverlay').classList.remove('active'); });
-  ['resetOverlay','successOverlay'].forEach(function(id){ $(id).addEventListener('click',function(e){ if(e.target===$(id)) $(id).classList.remove('active'); }); });
-  $('searchInput').addEventListener('input',function(e){ state.search=e.target.value; renderChecklist(); });
-  document.querySelectorAll('.segment button').forEach(function(btn){ btn.addEventListener('click',function(){ state.filter=btn.dataset.filter; document.querySelectorAll('.segment button').forEach(function(b){ b.classList.toggle('active', b===btn); }); renderChecklist(); }); });
 
+    var meta=findMeta(id);
+    state.pending++;
+    rpc('set_handover_item', {
+      p_code: state.code,
+      p_item_key: id,
+      p_item_label: meta.text || null,
+      p_section: meta.sectionTitle || null,
+      p_is_checked: next,
+      p_note: null,
+      p_actor: null
+    }).then(function(){
+      setSync(true);
+      lsSet(snapKey(state.code), JSON.stringify(buildLocalSnapshot()));
+    }).catch(function(err){
+      /* החזרת המצב אחורה - הסימון לא נשמר בשרת */
+      if(next) delete state.checked[id]; else state.checked[id]=true;
+      updateProgress(); renderChecklist();
+      setSync(false);
+      toast('הסימון לא נשמר: ' + (err.message||'אין חיבור'), true);
+    }).finally(function(){
+      state.pending--;
+    });
+  }
+
+  function buildLocalSnapshot(){
+    var items=[];
+    Object.keys(state.checked).forEach(function(k){ items.push({ item_key:k, is_checked:true }); });
+    return { group:state.group, employees:state.employees, items:items };
+  }
+
+  /* ============================================================
+     רענון וסנכרון
+     ============================================================ */
+  function refresh(silent){
+    if(!state.code || state.pending>0) return;
+    rpc('get_handover_by_code', { p_code: state.code }).then(function(data){
+      var before=checkedSig();
+      applySnapshot(data);
+      lsSet(snapKey(state.code), JSON.stringify(data));
+      state.offline=false;
+      setSync(true);
+      if(checkedSig()!==before){
+        renderEmpChips();
+        updateProgress();
+        renderChecklist();
+        if(silent) toast('החפיפה עודכנה על ידי משתמש אחר');
+      }
+      if(!silent) toast('עודכן מהשרת');
+    }).catch(function(err){
+      setSync(false);
+      if(!silent) toast('רענון נכשל: ' + (err.message||'אין חיבור'), true);
+    });
+  }
+  $('refreshBtn').addEventListener('click', function(){ refresh(false); });
+
+  setInterval(function(){
+    if(list.classList.contains('active') && document.visibilityState==='visible' && !state.offline) refresh(true);
+  }, 30000);
+  document.addEventListener('visibilitychange', function(){
+    if(document.visibilityState==='visible' && list.classList.contains('active')) refresh(true);
+  });
+
+  /* ============================================================
+     איפוס הדוח - דורש קוד זיהוי
+     ============================================================ */
+  $('resetBtn').addEventListener('click', function(){
+    $('resetCode').value=''; hideErr('resetError');
+    $('resetOverlay').classList.add('active');
+  });
+  $('cancelReset').addEventListener('click', function(){ $('resetOverlay').classList.remove('active'); });
+  $('resetCode').addEventListener('input', function(e){
+    e.target.value=e.target.value.replace(/\D/g,'').slice(0,4);
+    hideErr('resetError');
+  });
+  $('confirmReset').addEventListener('click', function(){
+    var entered=$('resetCode').value.trim();
+    if(entered !== state.code){ showErr('resetError','קוד הזיהוי אינו תואם לתהליך הנוכחי.'); return; }
+    var btn=$('confirmReset');
+    busy(btn, true, 'מאפס...');
+    rpc('reset_handover', { p_code: entered }).then(function(){
+      state.checked={};
+      updateProgress(); renderChecklist(); setSync(true);
+      lsSet(snapKey(state.code), JSON.stringify(buildLocalSnapshot()));
+      $('resetOverlay').classList.remove('active');
+      toast('הדוח אופס');
+    }).catch(function(err){
+      showErr('resetError', err.message || 'האיפוס נכשל.');
+    }).finally(function(){ busy(btn, false); });
+  });
+
+  /* ============================================================
+     ניווט וסינון
+     ============================================================ */
+  $('backBtn').addEventListener('click', function(){
+    lsDel(LS_CODE);
+    state.code=null; state.group=null; state.role=null; state.checked={}; state.offline=false;
+    $('gateCode').value=''; hideErr('gateError');
+    showScreen(gate);
+  });
+  $('closeSuccess').addEventListener('click', function(){ $('successOverlay').classList.remove('active'); });
+  ['resetOverlay','successOverlay'].forEach(function(id){
+    $(id).addEventListener('click', function(e){ if(e.target===$(id)) $(id).classList.remove('active'); });
+  });
+  $('searchInput').addEventListener('input', function(e){ state.search=e.target.value; renderChecklist(); });
+  document.querySelectorAll('.segment button').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      state.filter=btn.dataset.filter;
+      document.querySelectorAll('.segment button').forEach(function(b){ b.classList.toggle('active', b===btn); });
+      renderChecklist();
+    });
+  });
+
+  /* ============================================================
+     התקנה כאפליקציה
+     ============================================================ */
   var deferredPrompt=null, installBtn=$('installBtn');
-  window.addEventListener('beforeinstallprompt',function(e){ e.preventDefault(); deferredPrompt=e; installBtn.classList.add('show'); });
-  installBtn.addEventListener('click',function(){ if(!deferredPrompt) return; deferredPrompt.prompt(); deferredPrompt.userChoice.finally(function(){ deferredPrompt=null; installBtn.classList.remove('show'); }); });
-  window.addEventListener('appinstalled',function(){ installBtn.classList.remove('show'); });
+  window.addEventListener('beforeinstallprompt', function(e){ e.preventDefault(); deferredPrompt=e; installBtn.classList.add('show'); });
+  installBtn.addEventListener('click', function(){
+    if(!deferredPrompt) return;
+    deferredPrompt.prompt();
+    deferredPrompt.userChoice.finally(function(){ deferredPrompt=null; installBtn.classList.remove('show'); });
+  });
+  window.addEventListener('appinstalled', function(){ installBtn.classList.remove('show'); });
   (function iosHint(){
     var isIOS=/iphone|ipad|ipod/i.test(navigator.userAgent);
     var standalone=window.navigator.standalone===true || window.matchMedia('(display-mode: standalone)').matches;
-    var dismissed=CAN_STORE && localStorage.getItem('rail_ios_hint_v3');
+    var dismissed=lsGet('rail_ios_hint_v5');
     if(isIOS && !standalone && !dismissed){ setTimeout(function(){ $('iosSheet').classList.add('show'); }, 1200); }
-    $('closeIosSheet').addEventListener('click',function(){ $('iosSheet').classList.remove('show'); if(CAN_STORE) localStorage.setItem('rail_ios_hint_v3','1'); });
+    $('closeIosSheet').addEventListener('click', function(){ $('iosSheet').classList.remove('show'); lsSet('rail_ios_hint_v5','1'); });
   })();
-  if('serviceWorker' in navigator){ window.addEventListener('load',function(){ navigator.serviceWorker.register('sw.js').catch(function(){}); }); }
-  renderHome();
+  if('serviceWorker' in navigator){
+    window.addEventListener('load', function(){ navigator.serviceWorker.register('sw.js').catch(function(){}); });
+  }
+
+  /* ============================================================
+     הפעלה - חזרה אוטומטית לתהליך פעיל
+     ============================================================ */
+  (function boot(){
+    var saved=lsGet(LS_CODE);
+    if(saved && /^\d{4}$/.test(saved)){
+      $('gateCode').value=saved;
+      enterCode(saved, true);
+    }
+  })();
+
 })();
 </script>
 </body>
