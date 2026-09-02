@@ -724,6 +724,149 @@ button{touch-action:manipulation}
   ]};
   /* ------------------------------------------------------------ */
 
+
+  /* ------------------------------------------------------------
+     חפיפת רמ"ש גזרת תל אביב - תוכנית מלאה
+     מסלול ייעודי לגזרת ת"א בלבד. שאר הגזרות ממשיכות עם השלד הכללי.
+     ------------------------------------------------------------ */
+  var RAMASH_TA_SECTIONS = [
+    { id:'ta_intro', title:'כניסה לתפקיד והכרות ראשונית', icon:'star', items:[
+      item('משמרת צל - הסבר על תפקיד רמ"ש והכרות בסיסית עם התפקיד')
+    ]},
+
+    { id:'ta_stations', title:'הכרת הגזרה - תחנות ומתחמים', icon:'station', items:[
+      item('תחנת ת"א האוניברסיטה'),
+      item('תחנת ת"א סבידור מרכז'),
+      item('תחנת ת"א השלום'),
+      item('תחנת ת"א ההגנה'),
+      item('תחנת צומת חולון'),
+      item('תחנת חולון וולפסון'),
+      item('תחנת בת ים - יוספטל'),
+      item('תחנת בת ים - קוממיות'),
+      item('מתחמי סבידור')
+    ]},
+
+    { id:'ta_neighbors', title:'ממשקים וכוחות שכנים', icon:'people', items:[
+      item('מתחם שב"כ ודרכי יצירת קשר'),
+      item('קב"ט עזריאלי'),
+      item('קב"ט מסוף 2000'),
+      item('קב"ט תחנה מרכזית החדשה'),
+      item('רמ"ש כפר סבא'),
+      item('רמ"ש לוד'),
+      item('רמ"ש ירושלים - נבון'),
+      item('רמ"ש בנימינה')
+    ]},
+
+    { id:'ta_manning', title:'תקנים, איוש ותגבורים', icon:'people', items:[
+      item('תקני משמרות בוקר - ימים א-ה'),
+      item('תקני משמרות ערב - ימים א-ה'),
+      item('תקנים ביום שישי'),
+      item('תקנים במוצ"ש'),
+      item('הסבר כללי על תגבורי הופעות'),
+      item('תגבור עמדות במהלך שעות העומס')
+    ]},
+
+    { id:'ta_shifts', title:'ביצוע משמרות בפועל', icon:'train', items:[
+      item('ביצוע משמרת ת"א ערב ביום חמישי'),
+      item('ביצוע משמרת ת"א ביום שישי'),
+      item('ביצוע משמרת ת"א במוצ"ש')
+    ]},
+
+    { id:'ta_opening', title:'תדריך ופתיחת משמרות', icon:'station', items:[
+      item('אופן ביצוע תדריך'),
+      item('אופן פתיחת משמרות'),
+      item('חשיבות פתיחת תחנות בזמן'),
+      item('פתיחת משמרות תחת לחץ'),
+      item('התמודדות עם בעיות במהלך פתיחת תחנה')
+    ]},
+
+    { id:'ta_hr', title:'ניהול כוח אדם, משמעת ויחסי אנוש', icon:'people', items:[
+      item('מקרים ותגובות - טיפול באיחורים'),
+      item('מקרים ותגובות - טיפול באי הגעות'),
+      item('מקרים ותגובות - טיפול בדיווחי מחלה'),
+      item('ביצוע בדיקת ציוד לעובד'),
+      item('מתן תקלה לעובד בגין עבודה שלא ע"פ נהלים'),
+      item('תרחישי יחסי אנוש')
+    ]},
+
+    { id:'ta_bodies', title:'גופים רכבתיים וממשקי פיקוד', icon:'train', items:[
+      item('OCC'),
+      item('חטיבת נוסעים'),
+      item('פיקוד נוסעים'),
+      item('פיקוד'),
+      item('מוקד מב"ט'),
+      item('מוקד מבצעים'),
+      item('מחלקת אבידות ומציאות'),
+      item('מנהלי התחנות שבגזרה'),
+      item('בודק משואה'),
+      item('הסבר על מרכז שליטה ובקרה ארצי'),
+      item('הכרות עם מנהל אשכול'),
+      item('עבודה שוטפת ועדכונים בקבוצות וואטסאפ'),
+      item('עבודה שוטפת מול מנב"ט וסמנב"ט'),
+      item('עבודה מול קב"ט אזורי'),
+      item('פתיחת תקלות ומעקב אחר סגירתן')
+    ]},
+
+    { id:'ta_tablet', title:'טאבלט רמ"ש, מערכות ומסמכים מקוונים', icon:'report', items:[
+      item('עבודה עם טאבלט רמ"ש - הכרות עם התוכנות'),
+      item('עבודה עם המייל'),
+      item('טפסים מקוונים'),
+      item('עבודה עם תוכנת אקסל'),
+      item('מילוי דוח התייצבות והרחבה בנושא')
+    ]},
+
+    { id:'ta_drills', title:'תרגילים, ביקורות ומשוב', icon:'search', items:[
+      item('ביצוע תצפית'),
+      item('סנ"ח פתיחת תחנה'),
+      item('סנ"ח סגירת תחנה'),
+      item('סנ"ח מהלך משמרת'),
+      item('ביצוע משוב לאחר תרגיל או ביקורת')
+    ]},
+
+    { id:'ta_reports', title:'כתיבת דוחות ותיעוד', icon:'report', items:[
+      item('כתיבת דוח תרגיל'),
+      item('כתיבת דוח ביקורת'),
+      item('כתיבת מזכר חיובי'),
+      item('כתיבת מזכר שלילי'),
+      item('דוח בדיקת פועלים'),
+      item('דוח סגירת תחנות'),
+      item('דוח תקלות')
+    ]},
+
+    { id:'ta_procedures', title:'נהלים, סמכויות וחומר מקצועי', icon:'book', items:[
+      item('הכרות עם פק"מי התחנות שבגזרה'),
+      item('שליטה בסמכויות'),
+      item('טבלת בידוק עדכנית'),
+      item('חוברת תעודות')
+    ]},
+
+    { id:'ta_events', title:'ניהול אירועים בגזרה', icon:'alarm', items:[
+      item('ניהול זמנים ובלט"מים'),
+      item('ניהול אירוע בודד'),
+      item('ניהול 2 אירועים במקביל'),
+      item('ניהול 3 אירועים במקביל'),
+      item('ניהול אירועי תפיסות אמל"ח ודיווחים'),
+      item('ניהול אירוע אדם על המסילה בין תחנות'),
+      item('ניהול אירוע חדירה מרציפים'),
+      item('ניהול אירוע קטטה'),
+      item('ניהול אירוע תקיפת איש ביטחון בתחנה עם איש ביטחון יחיד'),
+      item('ניהול אירועי פח"ע')
+    ]},
+
+    { id:'ta_emergency', title:'חירום וגורמי חוץ', icon:'alarm', items:[
+      item('מספרי טלפון חירום - משטרה'),
+      item('מספרי טלפון חירום - משטרה צבאית'),
+      item('מספרי טלפון חירום - כב"א'),
+      item('מספרי טלפון חירום - מד"א'),
+      item('הגעה למוקד מבצעים')
+    ]},
+
+    { id:'ta_handoff', title:'העברת משמרת וסיום', icon:'envelope', items:[
+      item('העברת משמרת'),
+      item('ביצוע משימות')
+    ]}
+  ];
+
   var CLOSING = { id:'closing', title:'סיום חפיפה ואישורים', icon:'envelope', items:[
     item('קבלת חומרי חפיפה במעטפה'),
     item('ביצוע מבחן נהלים'),
@@ -751,7 +894,13 @@ button{touch-action:manipulation}
     sector_manager:{
       key:'sector_manager', title:'חפיפת רמ"ש גזרה', shortTitle:'רמ"ש גזרה',
       kicker:'מסלול ראש משמרת גזרה', icon:'people', needsSector:true,
-      sections:cloneSections(BASE_SECTIONS).concat([RAMASH_SECTOR_EXTRA, CLOSING])
+      sections:cloneSections(BASE_SECTIONS).concat([RAMASH_SECTOR_EXTRA, CLOSING]),
+      /* תוכן ייעודי לפי גזרה. גזרה שאינה מופיעה כאן מקבלת את sections שלמעלה.
+         אם תרצה שגם ת"א תכלול את סעיפי הבסיס, שנה את השורה של tel_aviv ל:
+         tel_aviv: cloneSections(BASE_SECTIONS).concat(RAMASH_TA_SECTIONS).concat([CLOSING]) */
+      sectorSections:{
+        tel_aviv: RAMASH_TA_SECTIONS.concat([CLOSING])
+      }
     },
     binoculars_manager:{
       key:'binoculars_manager', title:'חפיפת רמ"ש משקפים', shortTitle:'רמ"ש משקפים',
@@ -761,6 +910,23 @@ button{touch-action:manipulation}
   };
   var roleOrder = ['guards','inspectors','sector_manager','binoculars_manager'];
   var SECTORS = { tel_aviv:'ת"א', binyamina:'בנימינה', haifa:'חיפה' };
+
+  /* בחירת גרסת התפקיד לפי גזרה - נבנה פעם אחת ונשמר במטמון */
+  var SECTOR_ROLE_CACHE = {};
+  function resolveRole(typeKey, sector){
+    var role = ROLES[typeKey];
+    if(!role) return null;
+    if(!role.sectorSections || !sector || !role.sectorSections[sector]) return role;
+    var ck = typeKey + '|' + sector;
+    if(!SECTOR_ROLE_CACHE[ck]){
+      SECTOR_ROLE_CACHE[ck] = {
+        key:role.key, title:role.title, shortTitle:role.shortTitle,
+        kicker:role.kicker, icon:role.icon, needsSector:role.needsSector,
+        sections:cloneSections(role.sectorSections[sector])
+      };
+    }
+    return SECTOR_ROLE_CACHE[ck];
+  }
 
   function flatten(role){
     var out=[], n=1;
@@ -852,7 +1018,7 @@ button{touch-action:manipulation}
     var grid=$('typeGrid'); grid.innerHTML='';
     roleOrder.forEach(function(key){
       var role=ROLES[key];
-      var total=getItems(role).length;
+      var total=getItems(resolveRole(key, (draft.type===key ? draft.sector : null))).length;
       var btn=document.createElement('button');
       btn.type='button';
       btn.className='type-card'+(draft.type===key?' selected':'');
@@ -876,7 +1042,7 @@ button{touch-action:manipulation}
     });
   }
   document.querySelectorAll('#sectorRow .sector-chip').forEach(function(chip){
-    chip.addEventListener('click', function(){ draft.sector=chip.dataset.sector; renderSectorRow(); hideErr('createError'); });
+    chip.addEventListener('click', function(){ draft.sector=chip.dataset.sector; renderSectorRow(); renderTypeGrid(); hideErr('createError'); });
   });
 
   function renderEmpList(){
@@ -971,7 +1137,7 @@ button{touch-action:manipulation}
      ============================================================ */
   function applySnapshot(data){
     var g=data.group;
-    var role=ROLES[g.handover_type];
+    var role=resolveRole(g.handover_type, g.sector);
     if(!role) throw new Error('סוג חפיפה לא מוכר: '+g.handover_type);
 
     state.code=g.code;
