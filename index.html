@@ -358,13 +358,81 @@ button{touch-action:manipulation}
   .code-show{font-size:36px;letter-spacing:7px}
   .type-card{grid-template-columns:42px 1fr 20px}
 }
+/* ===== מסך כניסה בסיסמה ===== */
+#loginScreen .app-shell{padding-top:calc(var(--safe-t) + 18px);padding-bottom:calc(var(--safe-b) + 28px);display:flex;flex-direction:column;justify-content:center;min-height:100vh}
+.login-brand{text-align:center;margin-bottom:20px}
+.login-brand img{width:76px;height:76px;border-radius:22px;box-shadow:0 12px 30px rgba(13,42,86,.18)}
+.login-brand h1{margin:14px 0 5px;font-size:23px;font-weight:1000;color:var(--text);letter-spacing:-.4px}
+.login-brand p{margin:0;color:var(--muted);font-size:13px}
+.pass-field{width:100%;border:1px solid var(--line);border-radius:18px;padding:15px 16px;font-size:16px;font-weight:800;text-align:center;letter-spacing:3px;background:#fff;color:var(--text);font-family:inherit}
+.pass-field:focus{outline:none;border-color:#2f8bf0;box-shadow:0 0 0 4px rgba(47,139,240,.14)}
+.role-pill{display:inline-flex;align-items:center;gap:6px;border-radius:999px;padding:5px 11px;font-size:11px;font-weight:900}
+.role-pill.mgr{background:#fff4e6;color:#a35b00;border:1px solid rgba(163,91,0,.22)}
+.role-pill.usr{background:#eef5ff;color:#1667c4;border:1px solid rgba(22,103,196,.20)}
+
+/* ===== מסך מנהל חפיפות ===== */
+#adminScreen .app-shell{padding-top:calc(var(--safe-t) + 12px);padding-bottom:calc(var(--safe-b) + 34px)}
+.admin-sum{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin:4px 0 14px}
+.admin-sum>div{background:#fff;border:1px solid var(--line);border-radius:18px;padding:12px 6px;text-align:center}
+.admin-sum b{display:block;font-size:21px;font-weight:1000;color:var(--text);line-height:1.2}
+.admin-sum span{font-size:11px;color:var(--muted);font-weight:800}
+.grp-card{background:#fff;border:1px solid var(--line);border-radius:22px;padding:15px;margin-bottom:11px}
+.grp-top{display:flex;align-items:center;gap:10px;margin-bottom:4px}
+.grp-title{flex:1;min-width:0}
+.grp-title b{display:block;font-size:14.5px;font-weight:950;color:var(--text);line-height:1.35}
+.grp-title span{font-size:11.5px;color:var(--muted);font-weight:800}
+.grp-code{background:var(--text);color:#fff;border-radius:13px;padding:8px 12px;font-size:16px;font-weight:1000;letter-spacing:3px;flex:none}
+.grp-bar{height:8px;border-radius:99px;background:#eef1f6;overflow:hidden;margin:11px 0 7px}
+.grp-bar i{display:block;height:100%;border-radius:99px;transition:width .35s ease}
+.grp-meta{display:flex;justify-content:space-between;gap:8px;font-size:11.5px;font-weight:850;color:var(--muted);margin-bottom:11px}
+.grp-emps{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:11px}
+.grp-emps span{background:#f5f7fa;border:1px solid var(--line);border-radius:11px;padding:5px 9px;font-size:11.5px;font-weight:800;color:var(--text)}
+.grp-emps span i{font-style:normal;color:var(--muted);font-weight:700}
+.grp-open{width:100%;border:1px solid var(--line);background:#f8fafc;border-radius:15px;padding:11px;font-weight:900;font-size:13px;color:var(--text);cursor:pointer;font-family:inherit}
+.grp-open:active{background:#eef2f7}
+.admin-empty{text-align:center;padding:44px 18px;color:var(--muted);font-weight:800;font-size:13.5px}
+
+.login-who{display:none;margin-top:10px;text-align:center;font-size:13px;font-weight:900;color:#0c7b4d;background:#f1fff8;border:1px solid rgba(24,168,107,.20);border-radius:14px;padding:10px}
+.login-who.show{display:block}
+.login-who small{display:block;margin-top:3px;font-size:11px;font-weight:800;color:#12925e}
+.hello-row{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:12px}
+
 </style>
 </head>
 <body>
 <div id="app">
 
+
+  <!-- ============ מסך כניסה בסיסמה ============ -->
+  <main class="screen active" id="loginScreen">
+    <div class="app-shell">
+      <div class="login-brand">
+        <img src="icon-192.png" alt="לוגו" />
+        <h1>מערכת חפיפות דיגיטלית</h1>
+        <p>אגף ביטחון · רכבת ישראל</p>
+      </div>
+      <section class="gate-card accent">
+        <div class="gate-head">
+          <div class="gate-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>
+          <div class="gate-copy">
+            <h3>הזנת סיסמה</h3>
+            <p>הסיסמה נקבעת על ידי מנהל המערכת</p>
+          </div>
+        </div>
+        <input class="pass-field" id="loginPass" type="password" autocomplete="off" placeholder="סיסמה" />
+        <div class="login-who" id="loginWho"></div>
+        <div class="form-error" id="loginError"></div>
+        <button class="primary-btn stack-gap" id="loginBtn" type="button">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><path d="m10 17-5-5 5-5"/><path d="M15 12H5"/></svg>
+          כניסה
+        </button>
+      </section>
+      <footer class="home-footer">HANDOVER CHECKLIST // CLOUD SYNC // v6</footer>
+    </div>
+  </main>
+
   <!-- ============ מסך כניסה ============ -->
-  <main class="screen active" id="gateScreen">
+  <main class="screen" id="gateScreen">
     <div class="app-shell">
       <header class="home-top">
         <div class="logo-card"><img src="icon-192.png" alt="לוגו" /></div>
@@ -372,6 +440,10 @@ button{touch-action:manipulation}
           <div class="overline">אגף ביטחון · רכבת ישראל</div>
           <h1>מערכת חפיפות דיגיטלית</h1>
         </div>
+        <button class="pill-install show" id="logoutBtn" type="button" aria-label="יציאה" style="margin-inline-end:6px">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="m16 17 5-5-5-5"/><path d="M21 12H9"/></svg>
+          יציאה
+        </button>
         <button class="pill-install" id="installBtn" type="button" aria-label="התקנת האפליקציה">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg>
           התקנה
@@ -379,8 +451,11 @@ button{touch-action:manipulation}
       </header>
 
       <section class="hero-card">
-        <div class="chip"><span class="live-dot"></span>מערכת מוכנה לעבודה</div>
-        <h2>ברוך הבא</h2>
+        <div class="hello-row">
+          <div class="chip"><span class="live-dot"></span>מערכת מוכנה לעבודה</div>
+          <span class="role-pill usr" id="rolePill">מבצע חפיפות</span>
+        </div>
+        <h2 id="helloTitle">ברוך הבא</h2>
         <p>הזן קוד זיהוי כדי להצטרף לתהליך חפיפות קיים, או פתח תהליך חדש עבור קבוצת עובדים.</p>
       </section>
 
@@ -414,9 +489,51 @@ button{touch-action:manipulation}
             פתיחת תהליך חדש
           </button>
         </section>
+
+        <section class="gate-card" id="adminGateCard" style="display:none">
+          <div class="gate-head">
+            <div class="gate-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="9" rx="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5"/><rect x="14" y="12" width="7" height="9" rx="1.5"/><rect x="3" y="16" width="7" height="5" rx="1.5"/></svg></div>
+            <div class="gate-copy">
+              <h3>מסך מנהל חפיפות</h3>
+              <p>מעקב חי אחר כל תהליכי החפיפה הפעילים</p>
+            </div>
+          </div>
+          <button class="primary-btn ghost" id="gateAdminBtn" type="button">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="m7 14 3-4 3 3 5-6"/></svg>
+            פתיחת מסך ניהול
+          </button>
+        </section>
       </div>
 
       <footer class="home-footer">HANDOVER CHECKLIST // CLOUD SYNC // v5</footer>
+    </div>
+  </main>
+
+
+  <!-- ============ מסך מנהל חפיפות ============ -->
+  <main class="screen" id="adminScreen">
+    <div class="app-shell">
+      <header class="topbar">
+        <button class="icon-button" id="adminBackBtn" type="button" aria-label="חזרה">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18 9 12l6-6"/></svg>
+        </button>
+        <div class="title-stack">
+          <span>מנהל חפיפות</span>
+          <h2>כל התהליכים</h2>
+        </div>
+        <button class="icon-button" id="adminRefreshBtn" type="button" aria-label="רענון">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 3v6h-6"/></svg>
+        </button>
+      </header>
+
+      <div class="admin-sum">
+        <div><b id="admTotal">0</b><span>קבוצות</span></div>
+        <div><b id="admActive">0</b><span>בתהליך</span></div>
+        <div><b id="admDone">0</b><span>הושלמו</span></div>
+      </div>
+
+      <div class="form-error" id="adminError"></div>
+      <div id="adminList"></div>
     </div>
   </main>
 
@@ -582,6 +699,32 @@ button{touch-action:manipulation}
   /* ============================================================
      חיבור לענן (Supabase)
      ============================================================ */
+  /* ============================================================
+     >>> משתמשי המערכת - ערוך כאן בלבד <<<
+
+     שורה לכל אדם. כשהוא מזין את הסיסמה שלו,
+     המערכת מזהה אותו לפי השם ומציגה אותו על המסך.
+     השם גם נשמר בשרת ליד כל סעיף שהוא מסמן.
+
+     role: 'manager' = מנהל חפיפות. גם פותח, מסמן ומאפס,
+           ובנוסף רואה מסך מעקב חי אחר כל התהליכים.
+     role: 'user'    = מבצע חפיפות. פותח, מסמן ומאפס.
+
+     להוספת אדם: העתק שורה, שנה שם וסיסמה, ואל תשכח פסיק בסוף.
+     סיסמה חייבת להיות ייחודית - אין שתי סיסמאות זהות.
+     ============================================================ */
+  var USERS = [
+    { name:'דניאל',       pass:'menahel2',  role:'manager' },
+    { name:'רמ"ש ת"א',    pass:'telaviv1',  role:'user'    },
+    { name:'רמ"ש בנימינה', pass:'binyam1',   role:'user'    }
+  ];
+
+  function findUser(pass){
+    var hit = null;
+    USERS.forEach(function(u){ if(u.pass && pass === u.pass) hit = u; });
+    return hit;
+  }
+
   var SUPABASE_URL = 'https://wmqgclxpixoqllmndmpo.supabase.co';
   var SUPABASE_KEY = 'sb_publishable_KWvNMxVTtmn8NpRurS3OPw__R7XmVxk';
 
@@ -831,7 +974,7 @@ button{touch-action:manipulation}
       item('סנ"ח בפתיחת או סגירת תחנה, או בעבודה בשגרה'),
       item('ביצוע סנ"ח בשילוב תצפית'),
       item('דגשים לביצוע ביקורות סנ"ח - מיקום החיץ בהתאם לפק"מ האבטחה ובהתאם לדגשים בסיטואציות'),
-      item('הסבר על שאר הביקורות והתרגילים - אמל"ח לשיפור, החדרת אמל"ח מוסלק על הגוף או בתוך כבודה'),
+      item('הסבר על שאר הביקורות והתרגילים - אמל"ח בשיקוף, החדרת אמל"ח מוסלק על הגוף או בתוך כבודה'),
       item('ביצוע משוב לאחר תרגיל או ביקורת')
     ]},
 
@@ -1022,6 +1165,13 @@ button{touch-action:manipulation}
       'ta_reports', 'ta_procedures', 'ta_events', 'ta_emergency'
     ]));
 
+  /* סעיף סיום לרמ"ש ת"א ובנימינה - ללא החתמה על חוברת נהלים.
+     שאר התפקידים והגזרות ממשיכים עם CLOSING המלא. */
+  var CLOSING_RAMASH = { id:'closing', title:'סיום חפיפה ואישורים', icon:'envelope', items:[
+    item('קבלת חומרי חפיפה במעטפה'),
+    item('ביצוע מבחן נהלים')
+  ]};
+
   var CLOSING = { id:'closing', title:'סיום חפיפה ואישורים', icon:'envelope', items:[
     item('קבלת חומרי חפיפה במעטפה'),
     item('ביצוע מבחן נהלים'),
@@ -1054,8 +1204,8 @@ button{touch-action:manipulation}
          אם תרצה שגם ת"א תכלול את סעיפי הבסיס, שנה את השורה של tel_aviv ל:
          tel_aviv: cloneSections(BASE_SECTIONS).concat(RAMASH_TA_SECTIONS).concat([CLOSING]) */
       sectorSections:{
-        tel_aviv:  RAMASH_TA_SECTIONS.concat([CLOSING]),
-        binyamina: RAMASH_BINYAMINA_SECTIONS.concat([CLOSING])
+        tel_aviv:  RAMASH_TA_SECTIONS.concat([CLOSING_RAMASH]),
+        binyamina: RAMASH_BINYAMINA_SECTIONS.concat([CLOSING_RAMASH])
       }
     },
     binoculars_manager:{
@@ -1151,16 +1301,18 @@ button{touch-action:manipulation}
   var state = {
     code:null, group:null, employees:[], role:null,
     checked:{}, filter:'all', search:'',
-    offline:false, pending:0
+    offline:false, pending:0, auth:null, userName:null
   };
 
   var gate=$('gateScreen'), create=$('createScreen'), list=$('listScreen');
+  var login=$('loginScreen'), admin=$('adminScreen');
   var checklist=$('checklist'), empty=$('emptyState');
   var gaugeFg=$('gaugeFg'), pctText=$('pctText'), countText=$('countText'), statusText=$('statusText'), progressBar=$('progressBar');
   var CIRC=2*Math.PI*41;
 
   function showScreen(el){
-    [gate, create, list].forEach(function(s){ s.classList.toggle('active', s===el); });
+    [login, gate, create, list, admin].forEach(function(s){ s.classList.toggle('active', s===el); });
+    if(el!==admin) stopAdminPoll();
     window.scrollTo({top:0, behavior:'auto'});
   }
 
@@ -1267,7 +1419,7 @@ button{touch-action:manipulation}
     rpc('create_handover_group', {
       p_handover_type: draft.type,
       p_sector: draft.sector,
-      p_created_by: null,
+      p_created_by: state.userName || null,
       p_employees: draft.employees.map(function(e){
         return {
           first_name:e.first_name.trim(), last_name:e.last_name.trim(),
@@ -1337,7 +1489,7 @@ button{touch-action:manipulation}
         }catch(e){}
       }
       showErr('gateError', err.message || 'לא ניתן להתחבר. בדוק חיבור לאינטרנט.');
-      showScreen(gate);
+      showScreen(state.auth ? gate : login);
     }).finally(function(){
       entering=false;
       if(!silent) busy(btn, false);
@@ -1471,7 +1623,7 @@ button{touch-action:manipulation}
       p_section: meta.sectionTitle || null,
       p_is_checked: next,
       p_note: null,
-      p_actor: null
+      p_actor: state.userName || null
     }).then(function(){
       setSync(true);
       lsSet(snapKey(state.code), JSON.stringify(buildLocalSnapshot()));
@@ -1559,7 +1711,8 @@ button{touch-action:manipulation}
     lsDel(LS_CODE);
     state.code=null; state.group=null; state.role=null; state.checked={}; state.offline=false;
     $('gateCode').value=''; hideErr('gateError');
-    showScreen(gate);
+    if(backTarget === admin && state.auth === 'manager'){ openAdmin(); }
+    else { showScreen(gate); }
   });
   $('closeSuccess').addEventListener('click', function(){ $('successOverlay').classList.remove('active'); });
   ['resetOverlay','successOverlay'].forEach(function(id){
@@ -1573,6 +1726,156 @@ button{touch-action:manipulation}
       renderChecklist();
     });
   });
+
+
+  /* ============================================================
+     הרשאות כניסה
+     ============================================================ */
+  var LS_AUTH = 'handover_auth_v6';
+  var backTarget = gate;
+
+  function applyAuth(u){
+    state.auth = u.role;
+    state.userName = u.name;
+    $('adminGateCard').style.display = (u.role === 'manager') ? '' : 'none';
+    $('helloTitle').textContent = 'ברוך הבא, ' + u.name;
+    var pill = $('rolePill');
+    pill.textContent = (u.role === 'manager') ? 'מנהל חפיפות' : 'מבצע חפיפות';
+    pill.className = 'role-pill ' + (u.role === 'manager' ? 'mgr' : 'usr');
+  }
+
+  function showWho(u){
+    var box = $('loginWho');
+    if(!u){ box.classList.remove('show'); box.innerHTML = ''; return; }
+    box.innerHTML = esc(u.name) + '<small>' +
+      (u.role === 'manager' ? 'מנהל חפיפות' : 'מבצע חפיפות') + '</small>';
+    box.classList.add('show');
+  }
+
+  function doLogin(){
+    var v = $('loginPass').value.trim();
+    hideErr('loginError');
+    if(!v){ showErr('loginError', 'יש להזין סיסמה.'); return; }
+    var u = findUser(v);
+    if(!u){ showErr('loginError', 'סיסמה שגויה.'); return; }
+    lsSet(LS_AUTH, JSON.stringify({ name:u.name, role:u.role }));
+    $('loginPass').value = '';
+    showWho(null);
+    applyAuth(u);
+    showScreen(gate);
+    toast('שלום ' + u.name);
+  }
+
+  $('loginBtn').addEventListener('click', doLogin);
+  $('loginPass').addEventListener('keydown', function(e){ if(e.key === 'Enter') doLogin(); });
+  $('loginPass').addEventListener('input', function(e){
+    hideErr('loginError');
+    showWho(findUser(e.target.value.trim()));
+  });
+
+  $('logoutBtn').addEventListener('click', function(){
+    lsDel(LS_AUTH); lsDel(LS_CODE);
+    state.auth = null; state.userName = null;
+    state.code = null; state.group = null; state.role = null; state.checked = {};
+    $('gateCode').value = '';
+    $('loginPass').value = ''; showWho(null);
+    backTarget = gate;
+    showScreen(login);
+  });
+
+  /* ============================================================
+     מסך מנהל חפיפות - מעקב חי
+     ============================================================ */
+  var adminTimer = null;
+
+  function stopAdminPoll(){ if(adminTimer){ clearInterval(adminTimer); adminTimer = null; } }
+
+  function openAdmin(){
+    if(state.auth !== 'manager') return;
+    backTarget = admin;
+    showScreen(admin);
+    loadAdmin(true);
+    adminTimer = setInterval(function(){ loadAdmin(false); }, 8000);
+  }
+
+  function agoText(iso){
+    if(!iso) return '-';
+    var diff = Math.floor((Date.now() - new Date(iso).getTime()) / 1000);
+    if(diff < 60)    return 'לפני רגע';
+    if(diff < 3600)  return 'לפני ' + Math.floor(diff / 60) + ' דקות';
+    if(diff < 86400) return 'לפני ' + Math.floor(diff / 3600) + ' שעות';
+    return 'לפני ' + Math.floor(diff / 86400) + ' ימים';
+  }
+
+  function loadAdmin(showSpinner){
+    if(showSpinner) $('adminList').innerHTML = '<div class="admin-empty">טוען נתונים...</div>';
+    hideErr('adminError');
+    rpc('list_handover_groups', {}).then(function(rows){
+      renderAdmin(rows || []);
+    }).catch(function(err){
+      stopAdminPoll();
+      $('adminList').innerHTML = '';
+      showErr('adminError', err.message || 'לא ניתן לטעון את רשימת החפיפות.');
+    });
+  }
+
+  function renderAdmin(rows){
+    var wrap = $('adminList');
+    var total = rows.length, done = 0;
+
+    if(!rows.length){
+      wrap.innerHTML = '<div class="admin-empty">אין כרגע תהליכי חפיפה במערכת.</div>';
+      $('admTotal').textContent = '0';
+      $('admActive').textContent = '0';
+      $('admDone').textContent = '0';
+      return;
+    }
+
+    var html = '';
+    rows.forEach(function(g){
+      var role = resolveRole(g.handover_type, g.sector);
+      var totalItems = role ? getItems(role).length : 0;
+      var checked = Number(g.checked_count) || 0;
+      var pct = totalItems ? Math.round(checked / totalItems * 100) : 0;
+      if(pct >= 100) done++;
+
+      var color = colorFor(pct);
+      var title = role ? role.title : g.handover_type;
+      if(g.sector && SECTORS[g.sector]) title += ' · ' + SECTORS[g.sector];
+
+      var opener = g.created_by ? ' · נפתח על ידי ' + esc(g.created_by) : '';
+      var emps = (g.employees || []).map(function(e){
+        return '<span>' + esc(e.first_name + ' ' + e.last_name) + ' <i>' + esc(e.employee_number || '') + '</i></span>';
+      }).join('');
+
+      html += '<div class="grp-card">' +
+        '<div class="grp-top">' +
+          '<div class="grp-title"><b>' + esc(title) + '</b><span>' + statusFor(pct) + ' · ' + agoText(g.last_activity) + opener + '</span></div>' +
+          '<div class="grp-code">' + esc(g.code) + '</div>' +
+        '</div>' +
+        '<div class="grp-bar"><i style="width:' + pct + '%;background:' + color + '"></i></div>' +
+        '<div class="grp-meta"><span style="color:' + color + '">' + pct + '%</span><span>' + checked + ' מתוך ' + totalItems + ' סעיפים</span></div>' +
+        (emps ? '<div class="grp-emps">' + emps + '</div>' : '') +
+        '<button class="grp-open" type="button" data-code="' + esc(g.code) + '">כניסה לחפיפה הזו</button>' +
+      '</div>';
+    });
+
+    wrap.innerHTML = html;
+    $('admTotal').textContent = total;
+    $('admActive').textContent = total - done;
+    $('admDone').textContent = done;
+
+    wrap.querySelectorAll('.grp-open').forEach(function(btn){
+      btn.addEventListener('click', function(){
+        stopAdminPoll();
+        enterCode(btn.dataset.code);
+      });
+    });
+  }
+
+  $('gateAdminBtn').addEventListener('click', openAdmin);
+  $('adminBackBtn').addEventListener('click', function(){ backTarget = gate; showScreen(gate); });
+  $('adminRefreshBtn').addEventListener('click', function(){ loadAdmin(true); });
 
   /* ============================================================
      התקנה כאפליקציה
@@ -1600,9 +1903,24 @@ button{touch-action:manipulation}
      הפעלה - חזרה אוטומטית לתהליך פעיל
      ============================================================ */
   (function boot(){
-    var saved=lsGet(LS_CODE);
+    var saved = null;
+    try{ saved = JSON.parse(lsGet(LS_AUTH) || 'null'); }catch(e){ saved = null; }
+
+    /* אימות מחדש מול הרשימה - אם השם הוסר מהקובץ, הגישה נשללת */
+    var u = null;
+    if(saved && saved.name){
+      USERS.forEach(function(x){ if(x.name === saved.name && x.role === saved.role) u = x; });
+    }
+    if(!u){
+      lsDel(LS_AUTH);
+      showScreen(login);
+      return;
+    }
+    applyAuth(u);
+    showScreen(gate);
+    var saved = lsGet(LS_CODE);
     if(saved && /^\d{4}$/.test(saved)){
-      $('gateCode').value=saved;
+      $('gateCode').value = saved;
       enterCode(saved, true);
     }
   })();
