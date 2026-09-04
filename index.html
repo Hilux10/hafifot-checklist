@@ -841,7 +841,8 @@ button{touch-action:manipulation}
       item('דוח בדיקת פועלים'),
       item('דוח סגירת תחנות'),
       item('דוח תקלות'),
-      item('דוח אישור סככים')
+      item('דוח אישור סככים'),
+      item('דוח פספוס רכבת')
     ]},
 
     { id:'ta_procedures', title:'נהלים, סמכויות וחומר מקצועי', icon:'book', items:[
@@ -872,7 +873,8 @@ button{touch-action:manipulation}
       item('ניהול אירוע מוגבלות תנועתית'),
       item('ניהול אירוע הודעה אנונימית'),
       item('ניהול אירוע צבע אדום'),
-      item('ניהול אירוע נפילת רסיס בשטח תחנה או מסילות')
+      item('ניהול אירוע נפילת רסיס בשטח תחנה או מסילות'),
+      item('ניהול אירוע אדם חשוד - חשד לאיסוף מל"מ')
     ]},
 
     { id:'ta_emergency', title:'חירום וגורמי חוץ', icon:'alarm', items:[
@@ -883,6 +885,13 @@ button{touch-action:manipulation}
       item('הגעה למוקד מבצעים')
     ]},
 
+    { id:'ta_taxi', title:'הזמנת מוניות וספקים', icon:'radio', items:[
+      item('שיחה עם רכזת מוניות - הפנייה הראשונה תמיד'),
+      item('מוניטקס'),
+      item('בון תור'),
+      item('מוניות גולני')
+    ]},
+
     { id:'ta_handoff', title:'העברת משמרת וסיום', icon:'envelope', items:[
       item('העברת משמרת'),
       item('ביצוע משימות'),
@@ -891,6 +900,127 @@ button{touch-action:manipulation}
       item('דיווח בקבוצה עם אריק והראל')
     ]}
   ];
+
+
+  /* ------------------------------------------------------------
+     חפיפת רמ"ש גזרת בנימינה
+     סעיפים שזהים לת"א נשלפים מתוך RAMASH_TA_SECTIONS ולא משוכפלים,
+     כדי שתיקון עתידי בנהלים או בדוחות ייכנס לשתי הגזרות בבת אחת.
+     חשוב: אין לשנות מזהי סעיפים קיימים (ta_...) - שינוי מזהה
+     מאפס את הסימונים בקבוצות חפיפה שכבר פתוחות.
+     ------------------------------------------------------------ */
+  function pickSections(list, ids){
+    return ids.map(function(id){
+      var found = null;
+      list.forEach(function(sec){ if(sec.id===id) found = sec; });
+      if(!found) throw new Error('סעיף לא נמצא: ' + id);
+      return found;
+    });
+  }
+
+  var BY_STATIONS = { id:'by_stations', title:'הכרת הגזרה - תחנות', icon:'station', items:[
+    item('תחנת בנימינה'),
+    item('תחנת קיסריה - פרדס חנה'),
+    item('תחנת חדרה מערב'),
+    item('תחנת חדרה מזרח'),
+    item('תחנת נתניה'),
+    item('תחנת ספיר'),
+    item('תחנת בית יהושע'),
+    item('תחנת הרצליה')
+  ]};
+
+  var BY_COMPOUNDS = { id:'by_compounds', title:'שו"בים ומתחמים', icon:'cabinet', items:[
+    item('שו"ב דור'),
+    item('שו"ב זיכרון'),
+    item('שו"ב בנימינה'),
+    item('שו"ב רמז'),
+    item('שו"ב חדרה מערב'),
+    item('שו"ב אכיטוב'),
+    item('שו"ב ויתקין'),
+    item('שו"ב נתניה'),
+    item('שו"ב שפיים'),
+    item('שו"ב תל ברוך'),
+    item('מתחם כונן - זיכרון'),
+    item('מתחם מסילאים - בנימינה'),
+    item('מתחם מכולות - חדרה'),
+    item('מתחם - ויתקין'),
+    item('מתחם מסילאים - נתניה'),
+    item('מתחם לוגיסטיקה - נתניה'),
+    item('מתחם טכנאים - נתניה'),
+    item('כספת - נחל חדרה'),
+    item('כספת - נחל אלכסנדר'),
+    item('כספות ומנהרות - רעננה'),
+    item('אותם - בנימינה'),
+    item('אותם - בית יהושע'),
+    item('אותם - שפיים'),
+    item('אותם - ויתקין'),
+    item('אותם - נתניה')
+  ]};
+
+  var BY_AXES = { id:'by_axes', title:'צירים - קטעים וגשרים', icon:'train', items:[
+    item('קטע דור - זיכרון'),
+    item('קטע זיכרון - בנימינה'),
+    item('קטע בנימינה - רמז'),
+    item('קטע רמז - חדרה מזרח'),
+    item('קטע חדרה מזרח - אכיטוב'),
+    item('קטע רמז - חדרה'),
+    item('קטע חדרה - ויתקין'),
+    item('קטע ויתקין - נתניה'),
+    item('קטע נתניה - ספיר'),
+    item('קטע ספיר - בית יהושע'),
+    item('קטע בית יהושע - שפיים'),
+    item('קטע שפיים - הרצליה'),
+    item('קטע הרצליה - תל ברוך')
+  ]};
+
+  var BY_NEIGHBORS = { id:'by_neighbors', title:'ממשקים וכוחות שכנים', icon:'people', items:[
+    item('רמ"ש חיפה'),
+    item('רמ"ש טייבה'),
+    item('רמ"ש כפר סבא'),
+    item('רמ"ש תל אביב'),
+    item('אביגדור - גשר המתאבדים'),
+    item('קצין אבטחה - מחסום אביחיל'),
+    item('סיור רישפון - מנהרות רעננה'),
+    item('סיור בטיחות רכבת ישראל')
+  ]};
+
+  var BY_MANNING = { id:'by_manning', title:'תקנים, איוש ותגבורים', icon:'people', items:[
+    item('תקני משמרות בוקר - ימים א-ה'),
+    item('תקני משמרות ערב - ימים א-ה'),
+    item('תקנים ביום שישי'),
+    item('תקנים במוצ"ש'),
+    item('הסבר כללי על תגבורי הופעות'),
+    item('תגבור עמדות במהלך שעות העומס או אירועים מיוחדים ללא תגבור מוגדר (משחקי כדורגל באצטדיון נתניה)')
+  ]};
+
+  var BY_PATROL = { id:'by_patrol', title:'רכב סיור - דגשים והתנהלות', icon:'binoculars', items:[
+    item('הכרות עם רכב סיור'),
+    item('תפעול רכב סיור כולל תפעול כננת והסבר על החלפת פנצ\'ר'),
+    item('קריאת פק"מ סיור'),
+    item('כיווני מסילות - פורשות וחוזרות'),
+    item('דגשים בנושא סריקת מסילות בעת שגרה וחירום'),
+    item('אופן ביצוע סריקות בשו"בים ובכספות'),
+    item('בטיחות במהלך סריקה רגלית בסמוך למסילות פעילות'),
+    item('צרור מפתחות לשערים, שלטים ואפליקציית פאלגייט'),
+    item('התקנת מצלמת גג ותפעולה'),
+    item('הסבר על נקודות תורפה והכרות איתן - גשרים רכבתיים, גשרים ציבוריים, מעברי מים'),
+    item('אופן פתיחת תקלות בנושא גידור'),
+    item('שימוש בקשר רכבתי הכולל תרגולת עצירת תנועת רכבות'),
+    item('אופן הגעה סמויה לתחנה וחלוקת משימות לסייר'),
+    item('התנהלות כללית עם סייר במהלך משמרת'),
+    item('בדיקת ציוד לרכב סיור הכולל חתימה בספר רכב'),
+    item('תרגיל בדיקת ציוד לסייר')
+  ]};
+
+  /* עדיין להשלמה לבנימינה: הזמנת מוניות וספקים, העברת משמרת וסיום.
+     הערה: בבנימינה אין סעיף "ביצוע משמרות בפועל" - הוחלף ברכב סיור. */
+  var RAMASH_BINYAMINA_SECTIONS =
+    pickSections(RAMASH_TA_SECTIONS, ['ta_intro'])
+    .concat([BY_STATIONS, BY_COMPOUNDS, BY_AXES, BY_NEIGHBORS, BY_MANNING, BY_PATROL])
+    .concat(pickSections(RAMASH_TA_SECTIONS, [
+      'ta_opening', 'ta_hr', 'ta_bodies', 'ta_tablet', 'ta_drills',
+      'ta_reports', 'ta_procedures', 'ta_events', 'ta_emergency'
+    ]));
 
   var CLOSING = { id:'closing', title:'סיום חפיפה ואישורים', icon:'envelope', items:[
     item('קבלת חומרי חפיפה במעטפה'),
@@ -924,7 +1054,8 @@ button{touch-action:manipulation}
          אם תרצה שגם ת"א תכלול את סעיפי הבסיס, שנה את השורה של tel_aviv ל:
          tel_aviv: cloneSections(BASE_SECTIONS).concat(RAMASH_TA_SECTIONS).concat([CLOSING]) */
       sectorSections:{
-        tel_aviv: RAMASH_TA_SECTIONS.concat([CLOSING])
+        tel_aviv:  RAMASH_TA_SECTIONS.concat([CLOSING]),
+        binyamina: RAMASH_BINYAMINA_SECTIONS.concat([CLOSING])
       }
     },
     binoculars_manager:{
