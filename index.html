@@ -655,8 +655,8 @@ button{touch-action:manipulation}
       <section id="checklist"></section>
       <div class="empty-state" id="emptyState">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
-        <b>אין סעיפים להצגה</b>
-        <span>נסה לשנות חיפוש או סינון.</span>
+        <b id="emptyTitle">אין סעיפים להצגה</b>
+        <span id="emptyHint">נסה לשנות חיפוש או סינון.</span>
       </div>
     </div>
   </main>
@@ -896,13 +896,10 @@ button{touch-action:manipulation}
     item('אופן העברת דיווח לדרג הממונה')
   ]};
 
-  var RAMASH_BINOCULARS_EXTRA = { id:'ramashBino', title:'חפיפת רמ"ש משקפים', icon:'binoculars', items:[
-    item('הכרת תחומי האחריות של רמ"ש משקפים'),
-    item('אופן ביצוע תדריך משקף'),
-    item('מעקב אחר ביצוע משימות ודיווחן'),
-    item('ממשקי עבודה מול רמ"ש גזרה'),
-    item('אופן תיעוד וסיכום פעילות')
-  ]};
+  /* מסלול רמ"ש משקפים אופס בכוונה - ממתין לתוכן חדש.
+     להוספת סעיפים: הוסף שורות item(...) בתוך items של כל סעיף,
+     והוסף סעיפים נוספים למערך RAMASH_BINOCULARS_SECTIONS. */
+  var RAMASH_BINOCULARS_SECTIONS = [];
   /* ------------------------------------------------------------ */
 
 
@@ -1222,17 +1219,30 @@ button{touch-action:manipulation}
     });
   }
 
+  /* סעיף שמופיע רק בחפיפות מאבטחים ובודקים ביטחוניים.
+     נבנה על בסיס BASE_SECTIONS עם תוספת לסעיף הנהלים,
+     כדי שרמ"ש גזרה ורמ"ש משקפים לא יושפעו. */
+  function baseWithBodyCam(){
+    var secs = cloneSections(BASE_SECTIONS);
+    secs.forEach(function(sec){
+      if(sec.id === 'procedures'){
+        sec.items.push(item('אופן שימוש במצלמת גוף ודגשים'));
+      }
+    });
+    return secs;
+  }
+
   /* המפתחות חייבים להתאים בדיוק ל-handover_type בבסיס הנתונים */
   var ROLES = {
     guards:{
       key:'guards', title:'חפיפת מאבטחים', shortTitle:'מאבטחים',
       kicker:'מסלול מאבטח רכבת', icon:'shield',
-      sections:cloneSections(BASE_SECTIONS).concat([GUARD_EXTRA, CLOSING])
+      sections:baseWithBodyCam().concat([GUARD_EXTRA, CLOSING])
     },
     inspectors:{
       key:'inspectors', title:'חפיפת בודקים ביטחוניים', shortTitle:'בודקים ביטחוניים',
       kicker:'מסלול בודק ביטחוני', icon:'search',
-      sections:cloneSections(BASE_SECTIONS).concat([CLOSING])
+      sections:baseWithBodyCam().concat([CLOSING])
     },
     sector_manager:{
       key:'sector_manager', title:'חפיפת רמ"ש גזרה', shortTitle:'רמ"ש גזרה',
@@ -1249,7 +1259,7 @@ button{touch-action:manipulation}
     binoculars_manager:{
       key:'binoculars_manager', title:'חפיפת רמ"ש משקפים', shortTitle:'רמ"ש משקפים',
       kicker:'מסלול רמ"ש משקפים', icon:'binoculars',
-      sections:cloneSections(BASE_SECTIONS).concat([RAMASH_BINOCULARS_EXTRA, CLOSING])
+      sections:RAMASH_BINOCULARS_SECTIONS
     }
   };
   var roleOrder = ['guards','inspectors','sector_manager','binoculars_manager'];
@@ -1403,8 +1413,6 @@ button{touch-action:manipulation}
         '<div class="emp-grid">'+
           '<input class="f-input" data-i="'+i+'" data-f="first_name" placeholder="שם פרטי" value="'+esc(emp.first_name)+'" />'+
           '<input class="f-input" data-i="'+i+'" data-f="last_name" placeholder="שם משפחה" value="'+esc(emp.last_name)+'" />'+
-          '<input class="f-input" data-i="'+i+'" data-f="role" placeholder="תפקיד" value="'+esc(emp.role)+'" />'+
-          '<input class="f-input" data-i="'+i+'" data-f="employee_number" inputmode="numeric" placeholder="מספר עובד" value="'+esc(emp.employee_number)+'" />'+
         '</div>';
       wrap.appendChild(card);
     });
@@ -1450,7 +1458,7 @@ button{touch-action:manipulation}
     document.querySelectorAll('#empList .f-input').forEach(function(inp){
       if(!inp.value.trim()){ inp.classList.add('bad'); bad=true; }
     });
-    if(bad){ showErr('createError','עבור כל עובד חובה להזין שם, שם משפחה, תפקיד ומספר עובד.'); return; }
+    if(bad){ showErr('createError','עבור כל עובד חובה להזין שם פרטי ושם משפחה.'); return; }
 
     var btn=$('createSubmitBtn');
     busy(btn, true, 'יוצר תהליך...');
@@ -1461,7 +1469,7 @@ button{touch-action:manipulation}
       p_employees: draft.employees.map(function(e){
         return {
           first_name:e.first_name.trim(), last_name:e.last_name.trim(),
-          role:e.role.trim(), employee_number:e.employee_number.trim()
+          role:'', employee_number:''
         };
       })
     }).then(function(res){
@@ -1566,7 +1574,8 @@ button{touch-action:manipulation}
     state.employees.forEach(function(e){
       var d=document.createElement('div');
       d.className='emp-chip';
-      d.innerHTML=esc(e.first_name+' '+e.last_name)+'<small>'+esc(e.role)+' · '+esc(e.employee_number)+'</small>';
+      var sub=[e.role, e.employee_number].filter(function(x){ return x && String(x).trim(); }).join(' · ');
+      d.innerHTML=esc(e.first_name+' '+e.last_name)+(sub ? '<small>'+esc(sub)+'</small>' : '');
       wrap.appendChild(d);
     });
   }
@@ -1631,6 +1640,12 @@ button{touch-action:manipulation}
       checklist.appendChild(section);
     });
     empty.style.display=visible?'none':'block';
+    /* הבחנה בין מסלול שאין בו סעיפים בכלל לבין סינון שלא החזיר תוצאות */
+    if(!visible){
+      var noContent = getItems(state.role).length === 0;
+      $('emptyTitle').textContent = noContent ? 'המסלול הזה עדיין ריק' : 'אין סעיפים להצגה';
+      $('emptyHint').textContent  = noContent ? 'טרם הוגדרו סעיפי חפיפה למסלול הזה.' : 'נסה לשנות חיפוש או סינון.';
+    }
     checklist.querySelectorAll('.check-item').forEach(function(row){
       row.addEventListener('click',function(){ toggle(row.dataset.id); });
       row.addEventListener('keydown',function(e){ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); toggle(row.dataset.id); } });
@@ -1937,7 +1952,8 @@ button{touch-action:manipulation}
 
       var opener = g.created_by ? ' · נפתח על ידי ' + esc(g.created_by) : '';
       var emps = (g.employees || []).map(function(e){
-        return '<span>' + esc(e.first_name + ' ' + e.last_name) + ' <i>' + esc(e.employee_number || '') + '</i></span>';
+        var num = (e.employee_number || '').toString().trim();
+        return '<span>' + esc(e.first_name + ' ' + e.last_name) + (num ? ' <i>' + esc(num) + '</i>' : '') + '</span>';
       }).join('');
 
       html += '<div class="grp-card">' +
