@@ -404,6 +404,7 @@ button{touch-action:manipulation}
 .grp-del:active{background:#ffeaec}
 .modal p b{color:#b4232d}
 
+.ver-tag{margin-top:5px !important;font-size:11px !important;color:var(--faint) !important;font-weight:800}
 </style>
 </head>
 <body>
@@ -417,6 +418,7 @@ button{touch-action:manipulation}
         <img src="icon-192.png" alt="לוגו" />
         <h1>מערכת חפיפות דיגיטלית</h1>
         <p>אגף ביטחון · רכבת ישראל</p>
+        <p class="ver-tag">גרסה 7</p>
       </div>
       <section class="gate-card accent">
         <div class="gate-head">
@@ -2012,7 +2014,28 @@ button{touch-action:manipulation}
     $('closeIosSheet').addEventListener('click', function(){ $('iosSheet').classList.remove('show'); lsSet('rail_ios_hint_v5','1'); });
   })();
   if('serviceWorker' in navigator){
-    window.addEventListener('load', function(){ navigator.serviceWorker.register('sw.js').catch(function(){}); });
+    window.addEventListener('load', function(){
+      navigator.serviceWorker.register('sw.js').then(function(reg){
+        /* אם ממתינה גרסה חדשה - מבקשים ממנה להיכנס לתוקף ומרעננים פעם אחת */
+        function activate(w){ if(w) w.postMessage('skipWaiting'); }
+        if(reg.waiting) activate(reg.waiting);
+        reg.addEventListener('updatefound', function(){
+          var nw = reg.installing;
+          if(!nw) return;
+          nw.addEventListener('statechange', function(){
+            if(nw.state === 'installed' && navigator.serviceWorker.controller) activate(nw);
+          });
+        });
+        reg.update();
+      }).catch(function(){});
+
+      var refreshed = false;
+      navigator.serviceWorker.addEventListener('controllerchange', function(){
+        if(refreshed) return;
+        refreshed = true;
+        window.location.reload();
+      });
+    });
   }
 
   /* ============================================================
