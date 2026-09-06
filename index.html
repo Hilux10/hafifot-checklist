@@ -866,9 +866,16 @@ button{touch-action:manipulation}
     ]}
   ];
 
+  /* סעיף משותף - מאבטחים ורמ"ש גזרה. מאחד את הסעיפים
+     שהיו קודם מפוזרים בניסוחים שונים בכל מסלול. */
+  var TRAINS_SECTION = { id:'trains', title:'הכרות סוגי רכבות ועבודה ברכבות', icon:'train', items:[
+    item('רכבת SIEMENS'),
+    item('רכבת DD'),
+    item('רכבת DDEM')
+  ]};
+
   var GUARD_EXTRA = { id:'guardExtra', title:'תוספות ייעודיות למאבטחים', icon:'train', items:[
     item('ביצוע פתיחת ציר בפועל'),
-    item('הכרות עם סוגרי רכבות'),
     item('נוהל עבודת מאבטח ברכבת במהלך משמרת בשגרה'),
     item('ביצוע סריקות על מערך פ.צ'),
     item('ביצוע סריקות על מערך במהלך שגרה'),
@@ -1029,8 +1036,7 @@ button{touch-action:manipulation}
       item('חוברת תעודות'),
       item('הכרות עם כלל הנהלים הפנימיים של הרכבת - אופניים מתקפלים, גלגלי בגין, גלשנים, כלבי שירות וכדומה'),
       item('נהלי משרד'),
-      item('נהלים בשגרה לאיש ביטחון'),
-      item('סדרות רכבות')
+      item('נהלים בשגרה לאיש ביטחון')
     ]},
 
     { id:'ta_events', title:'ניהול אירועים בגזרה', icon:'alarm', items:[
@@ -1236,7 +1242,7 @@ button{touch-action:manipulation}
     guards:{
       key:'guards', title:'חפיפת מאבטחים', shortTitle:'מאבטחים',
       kicker:'מסלול מאבטח רכבת', icon:'shield',
-      sections:baseWithBodyCam().concat([GUARD_EXTRA, CLOSING])
+      sections:baseWithBodyCam().concat([GUARD_EXTRA, TRAINS_SECTION, CLOSING])
     },
     inspectors:{
       key:'inspectors', title:'חפיפת בודקים ביטחוניים', shortTitle:'בודקים ביטחוניים',
@@ -1251,8 +1257,8 @@ button{touch-action:manipulation}
          אם תרצה שגם ת"א תכלול את סעיפי הבסיס, שנה את השורה של tel_aviv ל:
          tel_aviv: cloneSections(BASE_SECTIONS).concat(RAMASH_TA_SECTIONS).concat([CLOSING]) */
       sectorSections:{
-        tel_aviv:  RAMASH_TA_SECTIONS.concat([CLOSING_RAMASH]),
-        binyamina: RAMASH_BINYAMINA_SECTIONS.concat([CLOSING_RAMASH])
+        tel_aviv:  RAMASH_TA_SECTIONS.concat([TRAINS_SECTION, CLOSING_RAMASH]),
+        binyamina: RAMASH_BINYAMINA_SECTIONS.concat([TRAINS_SECTION, CLOSING_RAMASH])
       }
     },
     binoculars_manager:{
